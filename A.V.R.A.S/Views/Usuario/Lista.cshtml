@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewData["Title"] = "Lista";
+    Layout = "~/Views/Shared/_Layout_Painel.cshtml";
+}
+@section script {
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/Usuario/BuscarUsuarios", function (data) {
+                console.log(data);
+            });
+        });
+        function buscar(nome) {
+            var nome = $("#nomeBusca").val();
+            var data = {
+                Nome: nome,
+            };
+            if (nome.length > 3) {
+                $.getJSON('/Usuario/BuscarPorNome',data, function (result) {
+                    if (result != "") {
+                        PreencherTabela(result);
+                    }
+                    else {
+                        txt = "";
+                        $("#tbody").html("");
+                        txt = "<tr><th>Nada Encontrado...</th></tr>";
+                        $("#tbody").html(txt);
+                    }
+                });
+            }
+            return;
+        }
+        function PreencherTabela(data) {
+            $("#tbody").html("");
+            txt = "";
+            $.each(data, function () {
+
+                txt +=  '<tr class="col-12">'+
+                            '<th scope="col" class="col-12">'+
+                                '<div class="accordion" id="accordionExample">'+
+                                    '<div class="card">'+
+                                        '<div class="card-header" id="headingOne">'+
+                                            '<h5 class="mb-0">'+
+                                                '<button class="btn" type="button" data-toggle="collapse" data-target="#Du" aria-expanded="false" aria-controls="collapseOne">'+
+                                                    'Carlos Eduardo Silva de Alcantara'+
+                                                '</button>'+
+                                                '<button class="btn float-right" type="button" data-toggle="collapse" data-target="#Du" aria-expanded="false" aria-controls="collapseOne">'+
+                                                    '<i class="fas fa-chevron-circle-down"></i>'+
+                                                '</button>'+
+                                                '<button class="btn float-right" type="button">'+
+                                                   '<i class="far fa-edit"></i>'+
+                                                '</button>'+
+                                                '<button class="btn float-right" >'+
+                                                    '<i class="fas fa-trash-alt"></i>'+
+                                                '</button>'+
+                                            '</h5>'+
+                                        '</div>'+
+
+                                        '<div id="Du" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">'+
+                                            '<div class="card-body">'+
+                                                'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non alemanha 0 x 2 coreia do sul cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven"t heard of them accusamus labore sustainable VHS."'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</th>'+
+                    '</tr>';
+                $("#tbody").html(txt);
+            })
+
+        }
+        function excluir(id) {
+
+        }
+        function editar(id) {
+
+        }
+    </script>
+
+}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-1 col-12" align="center">
+            <span> <img src="~/images/socio.png" class="logo" alt="Imagem de 3 pessoas uma ao lado da outra simbolizando uma sociedade" /></span>
+        </div>
+        <div class="col-lg-6 col-12 align-self-center float-none">
+            <h2> Usuarios Cadastrados </h2>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr scope="col" class="col-12">
+                <th>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Pesquise um Usuário" onkeydown="javascript: buscar();" id="nomeBusca" />
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            <tr class="col-12">
+                <th scope="col" class="col-12">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn" type="button" data-toggle="collapse" data-target="#Du" aria-expanded="false" aria-controls="collapseOne">
+                                        Carlos Eduardo Silva de Alcantara
+                                    </button>
+                                    <button class="btn float-right" type="button" data-toggle="collapse" data-target="#Du" aria-expanded="false" aria-controls="collapseOne">
+                                        <i class="fas fa-chevron-circle-down"></i>
+                                    </button>
+                                    <button class="btn float-right" type="button">
+                                        <i class="far fa-edit"></i>
+                                    </button>
+                                    <button class="btn float-right">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+
+                                </h5>
+
+                            </div>
+
+                            <div id="Du" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non alemanha 0 x 2 coreia do sul cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            <tr class="col-12">
+                <th scope="col" class="col-12">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Hisae" aria-expanded="false" aria-controls="collapseOne">
+                                        Andressa Hisae Tsukasaki
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="Hisae" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non alemanha 0 x 2 coreia do sul cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
