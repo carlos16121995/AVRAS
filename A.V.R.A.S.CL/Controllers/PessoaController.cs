@@ -10,6 +10,7 @@ namespace A.V.R.A.S.CL.Controllers
     {
         public int Gravar(PessoaViewModel p)
         {
+            int result;
             Endereco endereco = new Endereco()
             {
                 Cep = p.Endereco.Cep,
@@ -39,7 +40,17 @@ namespace A.V.R.A.S.CL.Controllers
             {
                 pessoa.Senha = p.Senha;
             }
-            return pessoa.Gravar();
+            if(p.Id != 0)
+            {
+                pessoa.Id = p.Id;
+                result = pessoa.Alterar();
+            }
+            else
+            {
+                result = pessoa.Gravar();
+            }
+            
+            return result;
         }
         public int Alterar(PessoaViewModel p)
         {

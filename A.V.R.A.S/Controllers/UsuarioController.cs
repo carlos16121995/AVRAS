@@ -100,7 +100,8 @@ namespace A.V.R.A.S.Controllers
             }
             if ((Erros.Count == 0) || (Erros == null))
             {
-                Senha = CriarSenha(Nome, Email); // Envia o email para o usuario depois de criar a Senha;
+               
+                
                 EnderecoViewModel endereco = new EnderecoViewModel()
                 {
                     PessoaId = Id,
@@ -119,13 +120,17 @@ namespace A.V.R.A.S.Controllers
                     DataNascimento = DataNascimento,
                     Telefone = Telefone,
                     Email = Email,
-                    Senha = Senha,
                     Socio = Socio,
                     Jogador = Jogador,
                     Isento = Isento,
                     PendenciaId = PendenciaId,
                     Endereco = endereco,
                 };
+                if (Id == 0)
+                {
+                    Senha = CriarSenha(Nome, Email); // Envia o email para o usuario depois de criar a Senha;
+                    pessoa.Senha = Senha;
+                }
                 int res = new cl.PessoaController().Gravar(pessoa);
                 if (res > 0)
                 {
