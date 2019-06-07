@@ -100,36 +100,35 @@
                         Cpf: cpf,
                     };
                     if (validarCPF(cpf)) {
+                        var str = cpf;
                         $.ajax({
                             type: 'POST',
                             url: '/Usuario/BuscarPorCpf',
-                            data: {cpf},
+                            data: {str},
                             success: function (data) {
-                                alert("entrou");
-                                if (data.pessoa2 != null) {
-                                    alert("entrou mais");
-                                    $("#id").val(data.pessoa2.id);
-                                    $("#nome").val(data.pessoa2.nome);
-                                    $("#email").val(data.pessoa2.email);
-                                    date = FormatarDataPadraoParaIngles(data.pessoa2.dataNascimento);
+                                if (data.pessoa != null) {
+                                    $("#id").val(data.pessoa.id);
+                                    $("#nome").val(data.pessoa.nome);
+                                    $("#email").val(data.pessoa.email);
+                                    date = FormatarDataPadraoParaIngles(data.pessoa.dataNascimento);
                                     $("#data_nascimento").val(date);
-                                    $("#telefone").val(data.pessoa2.telefone);
-                                    $("#cep").val(data.endereco.cep);
-                                    $("#cidade").val(data.endereco.cidade);
-                                    $("#bairro").val(data.endereco.bairro);
-                                    $("#rua").val(data.endereco.rua);
-                                    $("#numero").val(data.endereco.numero);
-                                    $("#complemento").val(data.endereco.complemento);
-                                    if (data.pessoa2.socio == 0) {
-                                        $(".socio option[value='true']").attr('selected', 'selected');
+                                    $("#telefone").val(data.pessoa.telefone);
+                                    $("#cep").val(data.pessoa.endereco.cep);
+                                    $("#cidade").val(data.pessoa.endereco.cidade);
+                                    $("#bairro").val(data.pessoa.endereco.bairro);
+                                    $("#rua").val(data.pessoa.endereco.rua);
+                                    $("#numero").val(data.pessoa.endereco.numero);
+                                    $("#complemento").val(data.pessoa.endereco.complemento);
+                                    if (data.pessoa.socio == 0) {
+                                        $(".socio option[value='1']").attr('selected', 'selected');
                                     }
-                                    if (data.pessoa2.jogador == 0) {
-                                        $(".jogador option[value='true']").attr('selected', 'selected');
+                                    if (data.pessoa.jogador == 0) {
+                                        $(".jogador option[value='1']").attr('selected', 'selected');
                                     }
 
-                                    $("#observacoes").val(data.pessoa2.observacoes);
-                                    if (data.pessoa2.isento == 0) {
-                                        $("#isento").attr("checked", "true");
+                                    $("#observacoes").val(data.pessoa.observacoes);
+                                    if (data.pessoa.isento == 0) {
+                                        $("#isento").attr("checked", "1");
                                     }
                                     else {
                                         if ($(".marcar").prop("checked")) {
@@ -156,8 +155,10 @@
                                 }
                             },
                             error: function (data) {
-                                console.log(data);
-                                alert("fudeu");
+                                    $('#Erro').modal('show');
+                                    $('#titulo').html("Ops... Ocorreu um erro!");
+                                    $('#corpo').html("Tente novamente.");
+                                
                             }
                         });
 
@@ -216,17 +217,34 @@
                     jogador: $("#jogador :selected").val(),
                     observacoes: $("#observacao").val(),
                     isento: $("#isento").is(':checked'),
+                    pendenciaId: "0",
                 };
                 $.ajax({
                     type: 'POST',
                     url: '/Usuario/Gravar',
-                    data: { Id: form.id, Cpf: form.cpf, Nome: form.nome, Email: form.email, DataNascimento: form.dataNascimento, Telefone: form.telefone, Cep: form.cep, Cidade: form.cidade, Bairro: form.bairro, Rua: form.rua, Numero: form.numero, Complemento: form.complemento, Socio: form.socio, Jogador: form.jogador, Observacoes: form.observacoes, Isento: form.isento },
+                    data: { Id: form.id, Cpf: form.cpf, Nome: form.nome, Email: form.email, DataNascimento: form.dataNascimento, Telefone: form.telefone, Cep: form.cep, Cidade: form.cidade, Bairro: form.bairro, Rua: form.rua, Numero: form.numero, Complemento: form.complemento, Socio: form.socio, Jogador: form.jogador, Observacoes: form.observacoes, Isento: form.isento, PendenciaId: form.pendenciaId },
                     success: function (result) {
-                        window.location.href = "/Usuario/Lista";
-                        Limpar();
+                        if (result.erros[0] == 100) {
+                                $('#Erro').modal('show');
+                                $('#titulo').html("Novo usuario Adicionado!");
+                                $('#corpo').html("A senha foi enviada para o e-mail cadastrado.");
+                           
+                            window.location.href = "/Usuario/Lista";
+                        }
+                        else {
+                                $('#Erro').modal('show');
+                                $('#titulo').html("Ops...");
+                                $('#corpo').html("Parece que houve um problema com algum campo preenchido. Verifique se os dados foram preenchidos corretamente.");
+                            
+                            usuario.paginacao1();
+                        }
+                        
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("erro");
+                            $('#Erro').modal('show');
+                            $('#titulo').html("Ops... Ocorreu um erro!");
+                            $('#corpo').html("Tente novamente.");
+                        
                     }
                 });
             }
@@ -571,7 +589,7 @@
                     $("#jogadorConfirma").html(form.jogador);
 
                     $("#observacaoConfirma").html(form.observacoes);
-                    if (form.isento == true) {
+                    if (form.isento == 1) {
                         form.isento = "Isento.";
                     }
                     else {
@@ -738,8 +756,8 @@
                 <div class="form-group col-lg-6 col-12">
                     <label for="socio">Socio:</label>
                     <select class="form-control socio" id="socio">
-                        <option value="false">Não</option>
-                        <option value="true">Sim</option>
+                        <option value="-1">Não</option>
+                        <option value="1">Sim</option>
                     </select>
                     <div class="valid-feedback" id="valida-socio-valid">
                     </div>
@@ -747,8 +765,8 @@
                 <div class="form-group col-lg-6 col-12">
                     <label for="jogador">Jogador:</label>
                     <select class="form-control jogador" id="jogador">
-                        <option value="false">Não</option>
-                        <option value="true">Sim</option>
+                        <option value="-1">Não</option>
+                        <option value="1">Sim</option>
                     </select>
                     <div class="valid-feedback" id="valida-jogador-valid">
                     </div>
@@ -767,7 +785,7 @@
 
             <div class="row ml-3">
                 <div class="form-group form-check ">
-                    <input type="checkbox" class="form-check-input" value="true" id="isento">
+                    <input type="checkbox" class="form-check-input" value="1" id="isento">
                     <label class="form-check-label" for="isento" required>Isento?</label>
                     <div class="valid-feedback" id="valida-isento-valid">
                     </div>
@@ -839,3 +857,20 @@
 
 
 </form>
+<div class="modal" id="Erro" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titulo"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="corpo">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger vermelho txt-branco" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
