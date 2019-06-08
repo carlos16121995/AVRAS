@@ -19,5 +19,23 @@ namespace A.V.R.A.S.CL.Models
         {
             return new PessoaDAO().BuscarPorCpf(cpf);
         }
+        public List<Pessoa> BuscarPessoa()
+        {
+            return new PessoaDAO().BuscarPessoa();
+        }
+        public List<Pessoa> BuscarUsuarioPorNome(string nome)
+        {
+            return new PessoaDAO().BuscarUsuarioPorNome(nome);
+        }
+        public int Excluir(int id)
+        {
+            return new PessoaDAO().Excluir(id);
+        }
+        public Pessoa Autenticar(string email, string senha)
+        {
+            return new PessoaDAO().Autenticar(email, senha);
+        }
+        
     }
+    
 }

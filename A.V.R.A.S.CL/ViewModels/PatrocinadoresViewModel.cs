@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace A.V.R.A.S.Models
+namespace A.V.R.A.S.CL.ViewModels
 {
-    public partial class Patrocinadores
+    public class PatrocinadoresViewModel
     {
-        public Patrocinadores()
-        {
-            Receber = new HashSet<Receber>();
-        }
-
         public int Id { get; set; }
         public string Nome { get; set; }
         public DateTime DataCadastro { get; set; }
@@ -17,6 +13,6 @@ namespace A.V.R.A.S.Models
         public DateTime DataVencimento { get; set; }
         public int Parcelas { get; set; }
 
-        public virtual ICollection<Receber> Receber { get; set; }
+        public virtual ICollection<ReceberViewModel> Receber { get; set; }
     }
 }

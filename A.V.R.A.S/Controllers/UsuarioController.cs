@@ -10,26 +10,79 @@ using System.Text;
 using System.Net.Mail;
 using System.Net;
 using cl = A.V.R.A.S.CL.Controllers;
+using A.V.R.A.S.Filters;
 
 
 namespace A.V.R.A.S.Controllers
 {
+   
     public class UsuarioController : Controller
     {
+        
         public IActionResult Index()
         {
+            if (Request.Cookies["email"] != null && Request.Cookies["senha"] != null)
+            {
+                var dados = new
+                {
+                    Codigo = Request.Cookies["email"].ToString(),
+                    Senha = Request.Cookies["senha"].ToString(),
+                };
+                ViewData.Add("login", dados);
+            }
+                return View();
+        }
+        public JsonResult Autenticar(IFormCollection form)
+        {
+            cl.PessoaController pessoa = new cl.PessoaController();
+            var u = pessoa.Autenticar(form["Email"], CalculateMD5Hash(form["Senha"]));
+
+            if (u != null)
+            {
+                CookieOptions ckOptions = new CookieOptions();
+                ckOptions.Expires = DateTime.Now.AddDays(30);
+                Response.Cookies.Append("id", u.Id.ToString(), ckOptions);
+                Response.Cookies.Append("email", form["Email"], ckOptions);
+                Response.Cookies.Append("senha", form["Senha"], ckOptions);
+
+                return Json(u);
+            }
+            else
+                return Json("");
+        }
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("email");
+            Response.Cookies.Delete("senha");
+            Response.Cookies.Delete("id");
+
+
+            return RedirectToAction("Index", "Usuario");
+        }
+        [ValidarAcesso(Order = 1)]
+        [Route("Usuario/Index/{cpf}")]
+        public IActionResult Cadastro(string cpf)
+        {
+            ViewBag.Cpf = cpf;
             return View();
         }
+        [ValidarAcesso(Order = 1)]
         public IActionResult Cadastro()
         {
+            ViewBag.Cpf = "";
             return View();
         }
+        [ValidarAcesso(Order = 1)]
         public IActionResult Lista()
         {
             return View();
         }
-
-
+        [ValidarAcesso(Order = 1)]
+        public JsonResult Excluir(int id)
+        {
+            return Json(id > 0 ? new cl.PessoaController().Excluir(id): -10);
+        }
+        [ValidarAcesso(Order = 1)]
         public JsonResult Gravar(IFormCollection form)
         {
             string Cpf, Nome, Telefone, Email, Senha, Observacoes, Cep, Cidade, Rua, Bairro, Complemento;
@@ -146,6 +199,7 @@ namespace A.V.R.A.S.Controllers
             return Json(retorno);
 
         }
+        [ValidarAcesso(Order = 1)]
         public JsonResult BuscarPorCpf(string str)
         {
             if (ValidaCpf(str, out string cpf))
@@ -153,23 +207,34 @@ namespace A.V.R.A.S.Controllers
                 PessoaViewModel pessoa = new PessoaViewModel();
                 var retorno = new
                 {
-                    pessoa = new cl.PessoaController().BuscarPorCPF(cpf),
+                    pessoa = new cl.PessoaController().BuscarPorCPF(cpf, true), //váriavel boolean traz ou não o endereço
                 };
                 return Json(retorno);
             }
             return Json(null);
         }
+        [ValidarAcesso(Order = 1)]
         public JsonResult BuscarUsuarios()
         {
+            List<PessoaViewModel> pessoa = new cl.PessoaController().BuscarUsuarios(true); /*váriavel boolean traz ou não o endereço*/
 
-            return Json("");
+            return Json(pessoa);
         }
-
-
+        [ValidarAcesso(Order = 1)]
         public JsonResult BuscarPorNome(string nome)
         {
-            return Json("");
+            int erros = 0;
+            if (!ValidaNome(nome, out string Nome))
+            {
+                erros =-10;
+            }
+            if(erros == 0)
+            {
+                return Json(new cl.PessoaController().BuscarUsuarioPorNome(Nome));
+            }
+            return Json(erros);
         }
+        [ValidarAcesso(Order = 1)]
         private string EnviarEmail(string nomeFrom, List<string> emailPara, string assunto, string texto)
         {
             string emailFrom = "avrasteste@gmail.com";
@@ -208,6 +273,7 @@ namespace A.V.R.A.S.Controllers
                 msg.Dispose();
             }
         }
+        [ValidarAcesso(Order = 1)]
         /*   Validações de campos de formulário
          * 
          * 
@@ -232,6 +298,7 @@ namespace A.V.R.A.S.Controllers
             }
             return resultado;
         }
+        [ValidarAcesso(Order = 1)]
         private bool ValidaCpf(string cpf, out string str)
         {
             str = cpf;

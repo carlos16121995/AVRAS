@@ -70,23 +70,29 @@
                 </button>
                 <div class="collapse navbar-collapse col-lg-11 menu" id="navbarSite">
                     <div class="col-lg-2 mt-5 mt-lg-n5">
-                        <a href="#" class="text-body nav-link texto-branco text-center mt-sm-5">Home</a>
+                        <a href="/Usuario/Lista" class="text-body nav-link texto-branco text-center mt-sm-5">Listar Usuarios</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
                         <a href="/Usuario/Cadastro" class="text-body nav-link texto-branco text-center">Usuarios</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
-                        <a href="/Patrocinadores/Cadastro" class="text-body nav-link texto-branco text-center">Patrocinadores</a>
+                        <a href="/Patrocinador/Cadastro" class="text-body nav-link texto-branco text-center">Patrocinadores</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
-                        <a href="#" class="text-body nav-link texto-branco text-center">Venda</a>
+                        <a href="/Patrocinador/Lista" class="text-body nav-link texto-branco text-center">Listar Patrocinadores</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
-                        <a href="#" class="text-body nav-link texto-branco text-center">Seja um Sócio</a>
+                        <a href="/Produto/Cadastro" class="text-body nav-link texto-branco text-center">Produtos</a>
                     </div>
                     <div class="col-lg-2 my-5 my-lg-0">
-                        <h2><a href="#" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Sair</a></h2>
-                    </div>
+                        @if (Context.Request.Cookies["email"] != null && Context.Request.Cookies["senha"] != null)
+                        {
+                            <h2><a href="/Usuario/Logout" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Sair</a></h2>
+                        }
+                        else{ 
+                            <h2><a href="/Usuario/Index" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Entrar</a></h2>
+                        }
+                        </div>
                 </div>
             </div>
         </div>

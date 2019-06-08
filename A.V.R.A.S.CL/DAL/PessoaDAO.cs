@@ -76,8 +76,78 @@ namespace A.V.R.A.S.CL.DAL
             {
                 using (avras2019Context contexto = new avras2019Context())
                 {
-                    return (from p in contexto.Pessoa.Include("Endereco")
+                    return (from p in contexto.Pessoa
                             where p.Cpf == cpf
+                            select p).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        internal List<Pessoa> BuscarUsuarioPorNome(string nome)
+        {
+            try
+            {
+                using (avras2019Context contexto = new avras2019Context())
+                {
+                    nome = "%" + nome + "%";
+                    return (from p in contexto.Pessoa
+                            where EF.Functions.Like(p.Nome, nome)
+                            select p).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        internal List<Pessoa> BuscarPessoa()
+        {
+            try
+            {
+                using (avras2019Context contexto = new avras2019Context())
+                {
+                    return contexto.Pessoa.OrderBy(p => p.Nome).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        internal int Excluir(int id)
+        {
+            try
+            {
+                using (avras2019Context contexto = new avras2019Context())
+                {
+                    var pessoa = contexto.Pessoa.Include("Endereco").Where(p => p.Id == id).FirstOrDefault();
+                    if (pessoa != null)
+                    {
+                        var endereco = pessoa.Endereco;
+                        contexto.Endereco.Remove(endereco);
+                        contexto.Pessoa.Remove(pessoa);
+                        return contexto.SaveChanges();
+                    }
+                    else
+                        return 0;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        internal Pessoa Autenticar(string email, string senha)
+        {
+            try
+            {
+                using (avras2019Context contexto = new avras2019Context())
+                {
+                    return (from p in contexto.Pessoa
+                            where p.Email == email && p.Senha == senha
                             select p).FirstOrDefault();
                 }
             }
