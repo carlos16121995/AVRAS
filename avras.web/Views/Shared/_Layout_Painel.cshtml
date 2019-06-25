@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="~/lib/jquery-3.3.1.js"></script>
+    <script src="~/lib/popper.js"></script>
+
+    <script src="~/lib/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+    <link href="~/lib/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/Layout_Site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    @RenderSection("style", required: false)
+    @RenderSection("script", required: false)
+
+</head>
+<body id="body">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            layoutSite.onclicks();
+        });
+
+        var layoutSite = {
+            onclicks: function () {
+                document.getElementById("menu").onclick = layoutSite.menu;
+
+            },
+            menu: function () {
+                if ($("#navbarSite").hasClass("transicao")) {
+                    if ($('#body').hasClass('over')) {
+                        $('#body').removeClass('over');
+                    }
+                    $('#btn-entrar').removeClass('btn btn-danger vermelho shadow rounded');
+                    $('#navbarSite').addClass('reverso');
+                    $('#navbarSite').removeClass('transicao');
+                    $('#btn-entrar').removeClass('btn btn-dark mx-auto w-50');
+                }
+                else {
+                    if ($("#navbarSite").hasClass("reverso")) {
+
+                        $('#navbarSite').removeClass('reverso');
+                    } if (!$('#body').hasClass('over')) {
+
+                        $('#body').addClass('over');
+                    }
+
+                    $('#btn-entrar').addClass('btn btn-danger vermelho shadow rounded');
+                    $('#navbarSite').addClass('transicao');
+                }
+            }
+        }
+
+
+    </script>
+
+
+    <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light branco shadow-sm">
+        <div class="container mw-100  mx-auto">
+            <div class="row col-12">
+                <div class="col-lg-1 col-sm-2 col-4">
+                    <a href="#" class=" text-body navbar-brand">
+                        <img src="~/images/Avras.png" class="logo float-left" alt="Logotipo da empresa" />
+                    </a>
+                </div>
+                <button class="navbar-toggler fixo mt-2" type="button" id="menu" data-toggle="collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse col-lg-11 menu" id="navbarSite">
+                    <div class="col-lg-2 mt-5 mt-lg-n5">
+                        <a href="/Usuario/Lista" class="text-body nav-link texto-branco text-center mt-sm-5">Listar Usuarios</a>
+                    </div>
+                    <div class="col-lg-2 my-3 my-lg-0">
+                        <a href="/Usuario/Cadastro" class="text-body nav-link texto-branco text-center">Usuarios</a>
+                    </div>
+                    <div class="col-lg-2 my-3 my-lg-0">
+                        <a href="/Patrocinador/Cadastro" class="text-body nav-link texto-branco text-center">Patrocinadores</a>
+                    </div>
+                    <div class="col-lg-2 my-3 my-lg-0">
+                        <a href="/Patrocinador/Lista" class="text-body nav-link texto-branco text-center">Listar Patrocinadores</a>
+                    </div>
+                    <div class="col-lg-2 my-3 my-lg-0">
+                        <a href="/Produto/Cadastro" class="text-body nav-link texto-branco text-center">Produtos</a>
+                    </div>
+                    <div class="col-lg-2 my-5 my-lg-0">
+                        @if (Context.Request.Cookies["email"] != null && Context.Request.Cookies["senha"] != null)
+                        {
+                            <h2><a href="/Usuario/Logout" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Sair</a></h2>
+                        }
+                        else{ 
+                            <h2><a href="/Usuario/Index" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Entrar</a></h2>
+                        }
+                        </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <div class="my-5">
+        @RenderBody()
+    </div>
+
+    <footer class="bg-dark mt-5 mt-auto" id="rodape">
+        <div class="container">
+            <div class="text-light">
+
+
+
+
+               
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="~/lib/jquery-3.3.1.js"></script>
+    <script src="~/lib/popper.js"></script>
+
+    <script src="~/lib/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+    <link href="~/lib/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/Layout_Site.css" rel="stylesheet" />
+
+
+</head>
+<body>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            layoutSite.onclicks();
+        });
+
+        var layoutSite = {
+            onclicks: function () {
+                document.getElementById("menu").onclick = layoutSite.menu;
+
+            },
+            menu: function () {
+                if ($("#navbarSite").hasClass("transicao")) {
+
+
+                    $('#btn-entrar').removeClass('btn btn-danger vermelho shadow rounded');
+                    $('#navbarSite').addClass('reverso');
+                    $('#navbarSite').removeClass('transicao');
+                    $('#btn-entrar').removeClass('btn btn-dark mx-auto w-50');
+                }
+                else {
+                    if ($("#navbarSite").hasClass("reverso")) {
+
+                        $('#navbarSite').removeClass('reverso');
+                    }
+                    $('#btn-entrar').addClass('btn btn-danger vermelho shadow rounded');
+                    $('#navbarSite').addClass('transicao');
+                }
+            }
+        }
+        $(window).on("load resize", function () {
+            let prev_h = $("#rodape").prev("*").outerHeight(true),
+                prev_o = $("#rodape").prev("*").offset().top,
+                foot_h = $("#rodape").outerHeight(true),
+                prevoh = prev_h + prev_o,
+                foot_m = 30; // margem superior do rodapé
+
+            if (window.innerHeight - prevoh - foot_m < foot_h) {
+                $("#rodape").css({
+                    "top": prevoh + foot_m + "px",
+                    "bottom": ""
+                });
+            } else {
+                $("#rodape").css({
+                    "top": "",
+                    "bottom": "0"
+                });
+            }
+        });
+    </script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light branco shadow-sm">
+        <div class="container mw-100  mx-auto">
+            <div class="row col-12">
+                <div class="col-lg-1 col-sm-2 col-4">
+                    <a href="#" class=" text-body navbar-brand">
+                        <img src="~/images/Avras.png" class="logo float-left" alt="Logotipo da empresa" />
+                    </a>
+                </div>
+                <button class="navbar-toggler fixo mt-2" type="button" id="menu" data-toggle="collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse col-lg-11 menu" id="navbarSite">
+                    <div class="col-lg-2 mt-5 mt-lg-n5">
+                        <a href="#" class="text-body nav-link texto-branco text-center mt-sm-5">Agende uma data</a>
+                    </div>
+                    <div class="col-lg-2 my-3 my-lg-0">
+                        <a href="#" class="text-body nav-link texto-branco text-center">Parceiros</a>
+                    </div>
+                    <div class="col-lg-2 my-3 my-lg-0">
+                        <a href="#" class="text-body nav-link texto-branco text-center">Sobre nós</a>
+                    </div>
+                    <div class="col-lg-2 my-3 my-lg-0">
+                        <a href="#" class="text-body nav-link texto-branco text-center">Perguntas Frenquentes</a>
+                    </div>
+                    <div class="col-lg-2 my-3 my-lg-0">
+                        <a href="#" class="text-body nav-link texto-branco text-center">Seja um Sócio</a>
+                    </div>
+                    <div class="col-lg-2 my-5 my-lg-0">
+                        <h2><a href="#" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Entrar</a></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <footer class="bg-dark mt-5 fixed-bottom " id="rodape">
+        <div class="container">
+            <div class="text-light">
+                Venho acompanhando questões similares aqui na stackoverflow e nos outros sites da rede, além de tutoriais na internet, mas a grande maioria das soluções não funcionam como eu preciso, ou mesmo são incompatíveis com o sistema do bootstrap.
+
+                Busco uma forma de "grudar" o rodapé no final da página, com altura variável (muda conforme o viewport e a disposição do grid interno), responsiva e com suporte ao bootstrap atual (3.4.4). Vale inclusive javascript puro e/ou jquery.
+                Venho acompanhando questões similares aqui na stackoverflow e nos outros sites da rede, além de tutoriais na internet, mas a grande maioria das soluções não funcionam como eu preciso, ou mesmo são incompatíveis com o sistema do bootstrap.
+
+                Busco uma forma de "grudar" o rodapé no final da página, com altura variável (muda conforme o viewport e a disposição do grid interno), responsiva e com suporte ao bootstrap atual (3.4.4). Vale inclusive javascript puro e/ou jquery.
+                Venho acompanhando questões similares aqui na stackoverflow e nos outros sites da rede, além de tutoriais na internet, mas a grande maioria das soluções não funcionam como eu preciso, ou mesmo são incompatíveis com o sistema do bootstrap.
+
+                Busco uma forma de "grudar" o rodapé no final da página, com altura variável (muda conforme o viewport e a disposição do grid interno), responsiva e com suporte ao bootstrap atual (3.4.4). Vale inclusive javascript puro e/ou jquery.
+                Venho acompanhando questões similares aqui na stackoverflow e nos outros sites da rede, além de tutoriais na internet, mas a grande maioria das soluções não funcionam como eu preciso, ou mesmo são incompatíveis com o sistema do bootstrap.
+
+                Busco uma forma de "grudar" o rodapé no final da página, com altura variável (muda conforme o viewport e a disposição do grid interno), responsiva e com suporte ao bootstrap atual (3.4.4). Vale inclusive javascript puro e/ou jquery.
+                Venho acompanhando questões similares aqui na stackoverflow e nos outros sites da rede, além de tutoriais na internet, mas a grande maioria das soluções não funcionam como eu preciso, ou mesmo são incompatíveis com o sistema do bootstrap.
+
+                Busco uma forma de "grudar" o rodapé no final da página, com altura variável (muda conforme o viewport e a disposição do grid interno), responsiva e com suporte ao bootstrap atual (3.4.4). Vale inclusive javascript puro e/ou jquery.
+                Venho acompanhando questões similares aqui na stackoverflow e nos outros sites da rede, além de tutoriais na internet, mas a grande maioria das soluções não funcionam como eu preciso, ou mesmo são incompatíveis com o sistema do bootstrap.
+
+                Busco uma forma de "grudar" o rodapé no final da página, com altura variável (muda conforme o viewport e a disposição do grid interno), responsiva e com suporte ao bootstrap atual (3.4.4). Vale inclusive javascript puro e/ou jquery.
+                Venho acompanhando questões similares aqui na stackoverflow e nos outros sites da rede, além de tutoriais na internet, mas a grande maioria das soluções não funcionam como eu preciso, ou mesmo são incompatíveis com o sistema do bootstrap.
+
+                Busco uma forma de "grudar" o rodapé no final da página, com altura variável (muda conforme o viewport e a disposição do grid interno), responsiva e com suporte ao bootstrap atual (3.4.4). Vale inclusive javascript puro e/ou jquery.
+                Venho acompanhando questões similares aqui na stackoverflow e nos outros sites da rede, além de tutoriais na internet, mas a grande maioria das soluções não funcionam como eu preciso, ou mesmo são incompatíveis com o sistema do bootstrap.
+
+                Busco uma forma de "grudar" o rodapé no final da página, com altura variável (muda conforme o viewport e a disposição do grid interno), responsiva e com suporte ao bootstrap atual (3.4.4). Vale inclusive javascript puro e/ou jquery.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
