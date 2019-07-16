@@ -1,9 +1,7 @@
 ﻿using avras.cl.Models;
-using System;
+using avras.cl.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using avras.cl.ViewModels;
 
 namespace avras.cl.Controllers
 {
@@ -13,7 +11,7 @@ namespace avras.cl.Controllers
         {
             int result;
 
-            Patrocinadores pessoa = new Patrocinadores()
+            Patrocinadores patrocinadores = new Patrocinadores()
             {
                 Nome = p.Nome,
                 DataVencimento = p.DataVencimento,
@@ -24,12 +22,12 @@ namespace avras.cl.Controllers
 
             if (p.Id != 0)
             {
-                pessoa.Id = p.Id;
-                result = pessoa.Alterar();
+                patrocinadores.Id = p.Id;
+                result = patrocinadores.Alterar();
             }
             else
             {
-                result = pessoa.Gravar();
+                result = patrocinadores.Gravar();
             }
 
             return result;
@@ -37,7 +35,7 @@ namespace avras.cl.Controllers
 
         public int Alterar(PatrocinadoresViewModel p)
         {
-            Patrocinadores pessoa = new Patrocinadores()
+            Patrocinadores patrocinadores = new Patrocinadores()
             {
                 Id = p.Id,
                 Nome = p.Nome,
@@ -47,11 +45,25 @@ namespace avras.cl.Controllers
                 Parcelas = p.Parcelas,
             };
 
-            return pessoa.Alterar();
+            return patrocinadores.Alterar();
         }
 
+        public PatrocinadoresViewModel BuscarPatrocinadoresPorId(int id)
+        {
+            Patrocinadores p = new Patrocinadores().BuscarPatrocinadoresPorId(id);
+            PatrocinadoresViewModel patrocinadores = new PatrocinadoresViewModel()
+            {
+                Id = p.Id,
+                Nome = p.Nome,
+                DataVencimento = p.DataVencimento,
+                Valor = p.Valor,
+                DataCadastro = p.DataCadastro,
+                Parcelas = p.Parcelas,
+            };
+            return patrocinadores;
 
-        public List<PatrocinadoresViewModel> BuscarPatrocinadoresPorNome(string nome, bool includeEndereco = false)
+        }
+        public List<PatrocinadoresViewModel> BuscarPatrocinadoresPorNome(string nome)
         {
             var patrocinadores = new Patrocinadores().BuscarPatrocinadoresPorNome(nome);
             if (patrocinadores != null && patrocinadores.Count > 0)
@@ -75,7 +87,7 @@ namespace avras.cl.Controllers
             return new Patrocinadores().Excluir(id);
         }
 
-        public List<PatrocinadoresViewModel> BuscarPatrocinadores(bool includeEndereco = false)
+        public List<PatrocinadoresViewModel> BuscarPatrocinadores()
         {
             var patrocinadores = new Patrocinadores().BuscarPatrocinadores();
             if (patrocinadores != null && patrocinadores.Count > 0)

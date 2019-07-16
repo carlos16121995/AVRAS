@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using avras.cl.Models;
-using System.Linq;
+﻿using avras.cl.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace avras.cl.DAL
 {
@@ -50,6 +49,21 @@ namespace avras.cl.DAL
             catch (Exception ex)
             {
                 return -1;
+            }
+        }
+
+        internal Patrocinadores BuscarPatrocinadoresPorId(int id)
+        {
+            try
+            {
+                using (avrastesteContext contexto = new avrastesteContext())
+                {
+                    return contexto.Patrocinadores.Find(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
         internal List<Patrocinadores> BuscarPatrocinadoresPorNome(string nome)

@@ -23,6 +23,11 @@ namespace avras.cl.Models
         {
             return new PatrocinadoresDAO().BuscarPatrocinadoresPorNome(nome);
         }
+        public Patrocinadores BuscarPatrocinadoresPorId(int id)
+        {
+            return new PatrocinadoresDAO().BuscarPatrocinadoresPorId(id);
+        }
+        
         public int Excluir(int id)
         {
             return new PatrocinadoresDAO().Excluir(id);

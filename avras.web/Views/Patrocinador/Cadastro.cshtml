@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewData["Title"] = "Cadastro";
+    Layout = "~/Views/Shared/_Layout_Painel.cshtml";
+}
+@section script{
+
+    <script src="~/js/CadastroPatrocinadores.js"></script>
+}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-1 col-12" align="center">
+            <span> <img src="~/images/patrocinadores.png" class="logo" alt="Imagem de uma mão segurando dinheiro" /></span>
+        </div>
+        <div class="col-lg-6 col-12 align-self-center float-none">
+            <h2>Cadastro de Patrocinadores</h2>
+        </div>
+    </div>
+</div>
+
+<form class="mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-12">
+
+                <h5 class="mb-3">Dados do Patrocinador:</h5>
+                <input type="hidden" id="id" value="@ViewData["Id"]" />
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" id="nome" value="@ViewData["Nome"]" onchange="javascript: validaNome();" placeholder="Seu nome aqui!" required>
+                <div class="valid-feedback" id="valida-nome-valid">
+                </div>
+                <div class="invalid-feedback" id="valida-nome">
+                    Informe um nome com no mínimo 4 caracteres!
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-12 col-lg-6">
+                <label for="data-vencimento">Data de vencimento do contrato:</label>
+                <input type="date" class="form-control" id="data-vencimento"value="@ViewData["DataVencimento"]" required>
+                <div class="valid-feedback" id="valida-data-vencimento-valid">
+                </div>
+                <div class="invalid-feedback" id="valida-data-vencimento">
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-6">
+                <label for="valor">Valor de patrocinio:</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">R$</span>
+                    </div>
+                    <input type="text" pattern="(\b[0-9]\b)/g" class="form-control"value="@ViewData["Valor"]" onkeyup="formatarMoeda();" id="valor" name="valor" value="" aria-label="Quantia">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-6 col-12">
+                <label for="numero">Quantidade de parcelas:</label>
+                <input type="text" pattern="(\b[0-9]\b)/g" onkeyup="somenteNumeros(this);"value="@ViewData["Parcelas"]" class="form-control" id="numero" required>
+                <div class="valid-feedback" id="valida-numero-valid">
+                </div>
+                <div class="invalid-feedback" id="valida-numero">
+                </div>
+            </div>
+            @*<div class="form-group col-lg-6 col-12">
+                    <label form="imagem">Logo do Patrocinador:</label>
+                    <input type="file" class="form-control" accept="image/png, image/jpeg" id="imagem" />
+                    <div class="valid-feedback" id="valida-imagem-Valid">
+
+                    </div>
+                    <div class="invalid-feedback" id="valida-numero">
+
+                    </div>
+                </div>
+                <div class="form-group col-lg-6 col-12">
+                    <label form="alt">Descricao da imagem:</label>
+                    <input type="text" class="form-control" id="descricao" name="descricao" />
+                    <div class="valid-feedback" id="valida-descricao-Valid">
+
+                    </div>
+                    <div class="invalid-feedback" id="valida-descricao">
+
+                    </div>
+                </div>
+                <div class="form-group col-lg-6 col-12">
+                    <label form="alt">Alt:</label>
+                    <input type="text" class="form-control" id="alt" name="alt" />
+                    <div class="valid-feedback" id="valida-alt-Valid">
+
+                    </div>
+                    <div class="invalid-feedback" id="valida-alt">
+
+                    </div>
+                </div>*@
+        </div>
+        <button class="btn btn-dark float-left my-3 pg3" onclick="javascript: Limpar();" type="button">Limpar</button>
+        <button class="btn btn-dark float-right my-3 pg3" onclick="javascript: Finalizar();" type="button">Gravar</button>
+
+    </div>
+</form>
+<div class="modal" id="Erro" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titulo"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="corpo">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger vermelho txt-branco" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>

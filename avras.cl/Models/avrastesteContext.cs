@@ -611,7 +611,7 @@ namespace avras.cl.Models
 
                 entity.Property(e => e.Valor)
                     .HasColumnName("valor")
-                    .HasColumnType("decimal(5,2)");
+                    .HasColumnType("decimal(8,2)");
             });
 
             modelBuilder.Entity<Pendencia>(entity =>
