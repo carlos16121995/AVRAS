@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Usuario";
+    Layout = "~/Views/Shared/_Layout_Painel.cshtml";
+}
+@section script {
+}
+@section Style  {
+
+}
+ <h4 class="text-center my-3 my-lg-5">Gerenciar Usuarios</h4>
+<div class="card-deck center-block container mx-auto">
+    <div class="row col-12">
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Usuario/Cadastro';">
+            <img src="~/images/socio.png" class="mt-4 logo mx-auto " alt="Imagem de 3 pessoas uma ao lado da outra simbolizando uma sociedade" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Usuario/Cadastro" class="text-dark"> Cadastrar Usuários </a></p>
+            </div>
+        </div>
+
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Usuario/Lista';">
+            <img src="~/images/Listar.png" class=" mt-4 logo mx-auto" alt="Imagem de uma prancheta para Anotações" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Usuario/Lista" class="text-dark"> Usuários Cadastrados </a></p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row col-12">
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Usuario/Pendencia';">
+            <img src="~/images/pendencia.png" class=" mt-4 logo mx-auto" alt="Imagem de balões de notificações" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Usuario/Pendencia" class="text-dark"> Pendências </a></p>
+            </div>
+        </div>
+
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Usuario/Relatorio';">
+            <img src="~/images/relatorio.png" class=" mt-4 logo mx-auto" alt="Imagem de um gráfico de linhas" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Usuario/Relatorio" class="text-dark"> Relatórios </a></p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+

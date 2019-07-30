@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Usuario";
+    Layout = "~/Views/Shared/_Layout_Painel.cshtml";
+}
+@section script {
+}
+@section Style  {
+
+}
+<h4 class="text-center my-3 my-lg-5">Gerenciar Usuarios</h4>
+<div class="card-deck">
+
+    <div class="card col-lg-4 border-light mx-auto">
+        <img src="~/images/socio.png" class="mt-4 logo mx-auto " alt="Imagem de 3 pessoas uma ao lado da outra simbolizando uma sociedade" />
+        <div class="card-body">
+            <p class="text-center"> <a href="/Usuario/Cadastro"> Cadastrar Usuários </a></p>
+        </div>
+    </div>
+
+    <div class="card col-lg-4 border-light mx-auto">
+        <img src="~/images/Listar.png" class=" mt-4 logo mx-auto" alt="Imagem de uma prancheta para Anotações" />
+        <div class="card-body">
+            <p class="text-center"> <a href="/Usuario/Lista"> Usuários Cadastrados </a></p>
+        </div>
+    </div>
+
+    <div class="card col-lg-4 border-light mx-auto ">
+        <img src="~/images/pendencia.png" class=" mt-4 logo mx-auto" alt="Imagem de balões de notificações" />
+        <div class="card-body">
+            <p class="text-center"> <a href="/Usuario/Pendencia"> Pendências </a></p>
+        </div>
+    </div>
+
+    <div class="card col-lg-4 border-light mx-auto ">
+        <img src="~/images/relatorio.png" class=" mt-4 logo mx-auto" alt="Imagem de um gráfico de linhas" />
+        <div class="card-body">
+            <p class="text-center"> <a href="/Usuario/Relatorio"> Relatórios </a></p>
+        </div>
+    </div>
+</div>

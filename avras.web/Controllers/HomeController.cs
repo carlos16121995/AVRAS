@@ -10,11 +10,34 @@ namespace avras.web.Controllers
 {
     public class HomeController : Controller
     {
+        public IActionResult Contato()
+        {
+            return View();
+        }
+        public IActionResult Aniversariantes()
+        {
+            return View();
+        }
+        public IActionResult Inicio()
+        {
+            return View();
+        }
+        public IActionResult PerguntasFrequentes()
+        {
+            return View();
+        }
+        public IActionResult Sobre()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
         }
-
+        public IActionResult Home()
+        {
+            return View("Home");
+        }
         public IActionResult Privacy()
         {
             return View();

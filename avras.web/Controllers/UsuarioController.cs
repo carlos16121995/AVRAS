@@ -16,6 +16,42 @@ namespace avras.web.Controllers
 {
     public class UsuarioController : Controller
     {
+        public IActionResult Alugueis()
+        {
+            return View();
+        }
+        public IActionResult Aluguel()
+        {
+            return View();
+        }
+        public IActionResult Cadastro_Usuario()
+        {
+            return View();
+        }
+        public IActionResult Minhas_Mensalidades()
+        {
+            return View();
+        }
+        public IActionResult Perfil()
+        {
+            return View();
+        }
+        public IActionResult Relatorios()
+        {
+            return View();
+        }
+        public IActionResult Pendencias()
+        {
+            return View();
+        }
+        public IActionResult Alterar_Senha()
+        {
+            return View();
+        }
+        public IActionResult Usuario()
+        {
+            return View("Usuario");
+        }
         public IActionResult Index()
         {
             if (Request.Cookies["email"] != null && Request.Cookies["senha"] != null)

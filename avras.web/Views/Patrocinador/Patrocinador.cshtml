@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Patrocinadores";
+    Layout = "~/Views/Shared/_Layout_Painel.cshtml";
+}
+@section script {
+}
+@section Style  {
+
+}
+<h4 class="text-center my-3 my-lg-5">Gerenciar Patrocinadores</h4>
+<div class="card-deck container mx-auto">
+    <div class="row col-12 mx-auto">
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Patrocinador/Cadastro';">
+            <img src="~/images/briefcase.png" class="mt-4 logo mx-auto " alt="Imagem de 3 pessoas uma maleta" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Patrocinador/Cadastro" class="text-dark"> Cadastrar Patrocinadores </a></p>
+            </div>
+        </div>
+
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Patrocinador/Lista';">
+            <img src="~/images/Listar.png" class=" mt-4 logo mx-auto" alt="Imagem de uma prancheta para Anotações" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Patrocinador/Lista" class="text-dark"> Patrocinadores Cadastrados </a></p>
+            </div>
+        </div>
+    </div>
+</div>

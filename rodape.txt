@@ -1,0 +1,43 @@
+Diretoria
+Mandados
+Novo Mandado
+
+Estoque
+Adicionar Produto
+Listar Produtos
+
+Finanças
+Quitar Conta Pagar
+Relatorio
+Retirada Caixa
+
+Inicio
+Aniversariantes
+Contato
+Perguntas Frequentes
+Sobre
+
+Mensalidades
+Gerenciar Mensalidades
+
+Patrimonio
+Listar Patrimonios
+
+Patrocinador
+Cadastro de Patrocinador
+Lista
+
+Usuario
+Alterar Senha
+Meus Alugueis
+Aluguel
+Cadastrar Usuario
+Historio do Bar
+Listar Usuarios
+Minhas Mensalidades
+Pendencias
+Perfil
+Relatorios
+
+Venda
+Histórico de Vendas

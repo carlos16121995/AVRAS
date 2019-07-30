@@ -16,6 +16,10 @@ namespace avras.web.Controllers
     [ValidarAcesso(Order = 1)]
     public class PatrocinadorController : Controller
     {
+        public IActionResult Patrocinador()
+        {
+            return View("Patrocinador");
+        }
         public IActionResult Lista()
         {
             return View();

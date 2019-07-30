@@ -61,7 +61,7 @@
         <div class="container mw-100  mx-auto">
             <div class="row col-12">
                 <div class="col-lg-1 col-sm-2 col-4">
-                    <a href="#" class=" text-body navbar-brand">
+                    <a href="/Home/Inicio" class=" text-body navbar-brand">
                         <img src="~/images/Avras.png" class="logo float-left" alt="Logotipo da empresa" />
                     </a>
                 </div>
@@ -70,29 +70,30 @@
                 </button>
                 <div class="collapse navbar-collapse col-lg-11 menu" id="navbarSite">
                     <div class="col-lg-2 mt-5 mt-lg-n5">
-                        <a href="/Usuario/Lista" class="text-body nav-link texto-branco text-center mt-sm-5">Listar Usuarios</a>
+                        <a href="/Vendas/Venda" class="text-body nav-link texto-branco text-center mt-sm-5">Venda</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
-                        <a href="/Usuario/Cadastro" class="text-body nav-link texto-branco text-center">Usuarios</a>
+                        <a href="/Usuario/Aluguel" class="text-body nav-link texto-branco text-center">Aluguel</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
-                        <a href="/Patrocinador/Cadastro" class="text-body nav-link texto-branco text-center">Patrocinadores</a>
+                        <a href="/Mensalidades/Mensalidades" class="text-body nav-link texto-branco text-center">Mensalidades</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
-                        <a href="/Patrocinador/Lista" class="text-body nav-link texto-branco text-center">Listar Patrocinadores</a>
+                        <a href="/Diretoria/Diretoria" class="text-body nav-link texto-branco text-center">Diretoria</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
-                        <a href="/Produto/Cadastro" class="text-body nav-link texto-branco text-center">Produtos</a>
+                        <a href="/Usuario/Perfil" class="text-body nav-link texto-branco text-center">Perfil</a>
                     </div>
                     <div class="col-lg-2 my-5 my-lg-0">
                         @if (Context.Request.Cookies["email"] != null && Context.Request.Cookies["senha"] != null)
                         {
                             <h2><a href="/Usuario/Logout" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Sair</a></h2>
                         }
-                        else{ 
+                        else
+                        {
                             <h2><a href="/Usuario/Index" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Entrar</a></h2>
                         }
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,19 +103,77 @@
 
 
 
-    <div class="mb-5">
+    <div class="mb-5 main">
         @RenderBody()
     </div>
 
-    <footer class="bg-dark mt-5 mt-auto" id="rodape">
-        <div class="container">
-            <div class="text-light">
-
-
-
-
-               
+    <footer class="bg-dark mt-5 mt-auto baixo" id="rodape">
+        <div class="container row mx-auto">
+            <div class="col-12 col-lg-3 text-center text-light">
+                <a href="/Diretoria/Diretoria" class="text-decoration-none text-light font-weight-bold"><span class="my-3">Diretoria</span></a><br />
+                <a href="/Diretoria/Mandados" class="text-decoration-none text-light my-5"><span class="my-3">Mandados</span></a><br />
+                <a href="/Diretoria/Novo_Mandado" class="text-decoration-none text-light my-5">Novo Mandado</a><br />
             </div>
+            <div class="col-12 col-lg-3 text-center text-light">
+                <a href="/Estoque/Estoque" class="text-decoration-none text-light my-5 font-weight-bold">Estoque</a><br />
+                <a href="/Estoque/AdicionarProduto" class="text-decoration-none text-light my-5">Adicionar Produto</a><br />
+                <a href="/Estoque/ListarProdutos" class="text-decoration-none text-light my-5">Listar Produto</a><br />
+            </div>
+            <div class="col-12 col-lg-3 text-center text-light">
+                <a href="/Vendas/Venda" class="text-decoration-none text-light my-5 font-weight-bold">Venda</a><br />
+                <a href="/Vendas/Historico_Vendas" class="text-decoration-none text-light my-5">Histórico de Vendas</a><br />
+            </div>
+            <div class="col-12 col-lg-3 text-center text-light">
+                <a href="/Financas/Financas" class="text-decoration-none text-light my-5 font-weight-bold">Finanças</a><br />
+                <a href="/Financas/QuitaContaPagar" class="text-decoration-none text-light my-5">Quitar Conta a Pagar</a><br />
+                <a href="/Financas/Relatorio" class="text-decoration-none text-light my-5">Relatorio</a><br />
+                <a href="/Financas/RetiradaCaixa" class="text-decoration-none text-light my-5">Retirada de Caixa</a><br />
+                <a href="/Financas/Caixa" class="text-decoration-none text-light my-5">Caixa</a><br />
+            </div>
+        </div>
+        <div class="container row mx-auto">
+            <div class="col-12 col-lg-3 text-center text-light">
+                <a href="/Patrocinador/Patrocinador" class="text-decoration-none text-light my-5 font-weight-bold">Patrocinador</a><br />
+                <a href="/Patrocinador/Cadastro" class="text-decoration-none text-light my-5">Cadastro Patrocinador</a><br />
+                <a href="/Patrocinador/Lista" class="text-decoration-none text-light my-5">Listar Patrocinador</a><br />
+            </div>
+            <div class="col-12 col-lg-3 text-center text-light">
+                <a href="/Patrocinador/Patrimonio" class="text-decoration-none text-light my-5 font-weight-bold">Patrimonio</a><br />
+                <a href="/Patrimonio/Listar_Patrimonio" class="text-decoration-none text-light my-5">Adicionar Patrimonio</a><br />
+                
+            </div>
+            <div class="col-12 col-lg-3 text-center text-light">
+                <a href="/Mensalidades/Mensalidades" class="text-decoration-none text-light font-weight-bold"><span class="my-3">Mensalidades</span></a><br />
+                <a href="/Mensalidades/GerenciarMensalidade" class="text-decoration-none text-light my-5"><span class="my-3">Gerenciar Mensalidades</span></a><br />
+            </div>
+            <div class="col-12 col-lg-3 text-center text-light">
+                <a href="/Home/Inicio" class="text-decoration-none text-light my-5 font-weight-bold">Inicio</a><br />
+                <a href="/Home/Aniversariantes" class="text-decoration-none text-light my-5">Aniversariantes</a><br />
+                <a href="/Home/Contato" class="text-decoration-none text-light my-5">Contato</a><br />
+                <a href="/Home/PerguntasFrequentes" class="text-decoration-none text-light my-5">Perguntas Frequentes</a><br />
+                <a href="/Home/Sobre" class="text-decoration-none text-light my-5">Sobre</a><br />
+            </div>
+        </div>
+        <div class="container row mx-auto">
+            
+            <div class="col-12 col-lg-12 text-center text-light">
+                <a href="/Usuario/Usuario" class="text-decoration-none text-light my-5 font-weight-bold">Usuario</a><br />
+                <a href="/Usuario/Alterar_Senha" class="text-decoration-none text-light my-5">Alterar Senha</a><br />
+                <a href="/Usuario/Alugueis" class="text-decoration-none text-light my-5">Meus Alugueis</a><br />
+                <a href="/Usuario/Aluguel" class="text-decoration-none text-light my-5">Aluguel</a><br />
+                <a href="/Usuario/Cadastro_Usuario" class="text-decoration-none text-light my-5">Cadastrar usuario</a><br />
+                <a href="/Usuario/HistoricoBar" class="text-decoration-none text-light my-5">Historico do Bar</a><br />
+                <a href="/Usuario/Lista" class="text-decoration-none text-light my-5">Listar Usuarios</a><br />
+                <a href="/Usuario/Minhas_Mensalidades" class="text-decoration-none text-light my-5">Minhas Mensalidades</a><br />
+                <a href="/Usuario/Pendencias" class="text-decoration-none text-light my-5">Pendencias</a><br />
+                <a href="/Usuario/Perfil" class="text-decoration-none text-light my-5">Perfil</a><br />
+                <a href="/Usuario/Relatorios" class="text-decoration-none text-light my-5">Relatorios</a><br />
+            </div>
+        </div>
+        <div class="container text-center">
+            <img src="~/images/Avras.png" class="logo mx-auto w-25" alt="Logotipo da empresa" /><br />
+            <span class="text-light">Todos os direitos reservados.</span>
+            <span class="text-light"> © @DateTime.Now.Year A.V.R.A.S</span>
         </div>
     </footer>
 

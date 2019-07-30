@@ -57,7 +57,7 @@ namespace avras.web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Usuario}/{action=Cadastro}/{id?}");
+                    template: "{controller=Home}/{action=Home}/{id?}");
             });
         }
     }
