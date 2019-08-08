@@ -1,4 +1,4 @@
-﻿function validarCPF(cpf) {
+﻿    function validarCPF(cpf) {
     cpf = cpf.replace(/[^\d]+/g, '');
     if (cpf == '') return false;
     // Elimina CPFs invalidos conhecidos

@@ -6,6 +6,77 @@
 
 @section script{ 
     <script>
+        $(document).ready(
+            $("#carregando").html('<i class="fas fa-spinner fa-spin">'),
+            carregarSelect(),
+            
+        );
+        window.onload = function () {
+            inicio();
+        };
+        function inicio() {
+            var id = $("#id").val();
+            if (id != "") {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Estoque/BuscarProdutoPorId',
+                    data: {Id: id,},
+                    success: function (data) {
+                        if (data != null) {
+                            $("#id").val(data.id);
+                            $("#nome").val(data.nome);
+                            $("#compra").val((data.valorCompra).toLocaleString('pt-BR'));
+                            $("#venda").val((data.valorVenda).toLocaleString('pt-BR'));
+                            $("#quantidade").val(data.quantidade);
+                            $("#minimo").val(data.quantidadeMinima);
+                            $(".tipo option[value='" + data.categoriaId + "']").attr('selected', 'selected');
+                            if (data.disponível == 0) {
+                                $("#disponibilidade").prop("checked", false);
+                            }
+                            else {
+                                $("#disponibilidade").prop("checked", true);
+                            }    
+                        }
+                        $("#carregando").html('');
+                    },
+                    error: function (data) {
+                        $('#Erro').modal('show');
+                        $('#titulo').html("Ops... Ocorreu um erro!");
+                        $('#corpo').html("Tente novamente.");
+                        $("#carregando").html('');
+                    }
+                });
+            }
+        }
+        function carregarSelect() {
+            
+            $.ajax({
+                type: 'GET',
+                url: '/Estoque/BuscarTipos',
+                success: function (data) {
+                    if (data.prod != null) {
+                        sel = document.getElementById("tipo");
+                        for (var i = 0; i < data.prod.length; i++) {
+
+                            var option = document.createElement("option");
+
+                            option.value = data.prod[i].id;
+                            option.text = data.prod[i].nome;
+                            sel.appendChild(option);
+                            ////select.html = "<option value='" + data.prod[i].id + "'>" + data.prod[i].nome + "</value> ";
+                        }
+                    }
+                    $("#carregando").html('');
+                },
+                error: function (data) {
+                    $('#Erro').modal('show');
+                    $('#titulo').html("Ops... Ocorreu um erro!");
+                    $('#corpo').html("Tente novamente.");
+                    $("#carregando").html('');
+                }
+            });
+
+        }
         function validaNome() {
             var nome = $("#nome").val();
             if ((nome != "") && (nome.length > 3)) {
@@ -113,24 +184,32 @@
             $("#venda").removeClass("is-invalid");
             $("#venda").removeClass("is-valid");
         }
-        function Finalizar() {
+        function Gravar() {
             var valida = true;
             if (validaNome() == false) {
                 valida = false;
             }
-            if (validaData() == false) {
+            var compra = $("#compra");
+            if (formatarMoeda(compra[0]) == false) {
                 valida = false;
             }
-            if (formatarMoeda() == false) {
+            var venda = $("#venda");
+            if (formatarMoeda(venda[0]) == false) {
+                valida = false;
+            } 
+            var quantidade = $("#quantidade");
+            if (somenteNumeros(quantidade[0]) == false) {
                 valida = false;
             }
-            var aux = $("#numero");
-            if (somenteNumeros(aux[0]) == false) {
+            var minimo = $("#minimo");
+            if (somenteNumeros(minimo[0]) == false) {
                 valida = false;
             }
-
             if (valida == true) {
-                var formData = new FormData();
+                var disponivel = 0;
+                if ($("#disponibilidade").is(':checked')) {
+                    disponivel = 1;
+                }
                 var id = $("#id").val();
                 if (id == "") {
                     id = 0;
@@ -138,28 +217,25 @@
                 else {
                     id = $("#id").val();
                 }
-                var imagem = $("#imagem");
-                formData.append("Id", id);
-                formData.append("Nome", $("#nome").val());
-                formData.append("Valor", $("#valor").val());
-                formData.append("Parcelas", $("#numero").val());
-                formData.append("DataVencimento", $("#data-vencimento").val());
-                //formData.append("Imagem", imagem.files[1]);
-                //formData.append("Descricao", $("descricao").val());
-                //formData.append("Alt", $("alt").val());
-
+                var form = {
+                    Id: id,
+                    Nome: $("#nome").val(), 
+                    Compra: $("#compra").val(),
+                    Venda: $("#venda").val(),
+                    Quantidade: $("#quantidade").val(),
+                    Minimo: $("#minimo").val(),
+                    CategoriaId: $("#tipo :selected").val(),
+                };
+                
                 $.ajax({
                     type: 'POST',
-                    url: '/Patrocinador/Gravar',
-                    data: formData,
-                    dataType: 'json',
-                    contentType: false,
-                    processData: false,
+                    url: '/Estoque/Gravar',
+                    data: { Id: form.Id, Nome: form.Nome, Compra: form.Compra, Venda: form.Venda, Quantidade: form.Quantidade, Minimo: form.Minimo, CategoriaId: form.CategoriaId, Disponivel: disponivel },
                     success: function (response) {
                         if (response.retorno == 1) {
 
 
-                            window.location.href = "/Patrocinador/Lista";
+                            window.location.href = "/Estoque/ListaRProdutos";
                         }
                         if (response == 99) {
                             $('#Erro').modal('show');
@@ -198,64 +274,91 @@
 
 </div>
 <div class="container d-block">
-    <input type="hidden" id="id" value="" />
-    <div class="row">
-        <div class="form-group col-12">
-            <label for="nome">Nome:</label>
-            <input type="text" class="form-control" id="nome" onchange="validaNome();" value="" required>
-            <div class="valid-feedback" id="valida-nome-valid">
+    <form>
+
+
+        <input type="hidden" id="id" value="@ViewData["Id"]" />
+        <div class="row">
+            <div class="form-group col-12">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" id="nome" onchange="validaNome();" value="@ViewData["Nome"]" required>
+                <div class="valid-feedback" id="valida-nome-valid">
+                </div>
+                <div class="invalid-feedback" id="valida-nome">
+                    Nome inválido!
+                </div>
             </div>
-            <div class="invalid-feedback" id="valida-nome">
-                Nome inválido!
+        </div>
+        <div class="row">
+            <div class="form-group col-12">
+                <label for="nome">Tipo:</label>
+                <select class="tipo form-control" id="tipo"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-lg-6">
+                <label for="quantidade">Quantidade em estoque:</label>
+                <input type="text" class="form-control" pattern="(\b[0-9]\b)/g" onkeyup="somenteNumeros(this);" id="quantidade" value="@ViewData["Quantidade"]" required>
+                <div class="valid-feedback" id="valida-quantidade-valid">
+                </div>
+                <div class="invalid-feedback" id="valida-quantidade">
+                    Quantidade inválida!
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-6">
+                <label for="minimo">Estoque Mínimo</label>
+                <input type="text" class="form-control" pattern="(\b[0-9]\b)/g" onkeyup="somenteNumeros(this);" id="minimo" value="@ViewData["Minimo"]" required>
+                <div class="valid-feedback" id="valida-minimo-valid">
+                </div>
+                <div class="invalid-feedback" id="valida-minimo">
+                    Quantidade inválida!
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-lg-6">
+                <label for="compra">Valor de compra:</label>
+                <input type="text" pattern="(\b[0-9]\b)/g" onkeyup="formatarMoeda(this);" class="form-control" id="compra" value="@ViewData["Compra"]" required>
+                <div class="valid-feedback" id="valida-compra-valid">
+                </div>
+                <div class="invalid-feedback" id="valida-compra">
+                    Valor inválido!
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-6">
+                <label for="venda">Valor de venda:</label>
+                <input type="text" pattern="(\b[0-9]\b)/g" onkeyup="formatarMoeda(this);" class="form-control" id="venda" value="@ViewData["Venda"]" required>
+                <div class="valid-feedback" id="valida-venda-valid">
+                </div>
+                <div class="invalid-feedback" id="valida-venda">
+                    Venda inválido!
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group form-check" col-12>
+                <label for="disponibilidade">Disponível?</label>
+                <input type="checkbox" class="form-check-input" value="1" id="disponibilidade">
+            </div>
+        </div>
+        <button class="btn btn-dark float-left my-3 " onclick="javascript: Limpar();" type="button">Limpar</button>
+        <button class="btn btn-dark float-right my-3 " onclick="javascript: Gravar();" type="button">Gravar</button>
+    </form>
+</div>
+<div class="modal" id="Erro" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titulo"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="corpo">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger vermelho txt-branco" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="form-group col-12">
-            <label for="nome">Tipo:</label>
-            <select class="form-control" id="tipo"></select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-12 col-lg-6">
-            <label for="quantidade">Quantidade em estoque:</label>
-            <input type="text" class="form-control" pattern="(\b[0-9]\b)/g" onkeyup="somenteNumeros(this);" id="quantidade" value="" required>
-            <div class="valid-feedback" id="valida-quantidade-valid">
-            </div>
-            <div class="invalid-feedback" id="valida-quantidade">
-                Quantidade inválida!
-            </div>
-        </div>
-        <div class="form-group col-12 col-lg-6">
-            <label for="minimo">Estoque Mínimo</label>
-            <input type="text" class="form-control" pattern="(\b[0-9]\b)/g" onkeyup="somenteNumeros(this);" id="minimo" value="" required>
-            <div class="valid-feedback" id="valida-minimo-valid">
-            </div>
-            <div class="invalid-feedback" id="valida-minimo">
-                Quantidade inválida!
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-12 col-lg-6">
-            <label for="compra">Valor de compra:</label>
-            <input type="text" pattern="(\b[0-9]\b)/g" onkeyup="formatarMoeda(this);" class="form-control" id="compra" value="" required>
-            <div class="valid-feedback" id="valida-compra-valid">
-            </div>
-            <div class="invalid-feedback" id="valida-compra">
-                Valor inválido!
-            </div>
-        </div>
-        <div class="form-group col-12 col-lg-6">
-            <label for="venda">Valor de venda:</label>
-            <input type="text" pattern="(\b[0-9]\b)/g" onkeyup="formatarMoeda(this);" class="form-control" id="venda" value="" required>
-            <div class="valid-feedback" id="valida-venda-valid">
-            </div>
-            <div class="invalid-feedback" id="valida-venda">
-                Venda inválido!
-            </div>
-        </div>
-    </div>
-    <button class="btn btn-dark float-left my-3 " onclick="javascript: Limpar();" type="button">Limpar</button>
-    <button class="btn btn-dark float-right my-3 " onclick="javascript: usuario.Gravar();" type="button">Gravar</button>
 </div>

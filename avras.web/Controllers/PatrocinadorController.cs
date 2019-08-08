@@ -97,6 +97,7 @@ namespace avras.web.Controllers
         }
         public JsonResult Gravar(IFormCollection form)
         {
+            //adicionar tipo e disponibilidade, arrumar valida, enviar para a view model e controller
             bool valido = Valida(form, out int id, out decimal valor, out DateTime data_vencimento, out int parcelas);
             if ((valido == true) && (data_vencimento.Month > DateTime.Now.Month && data_vencimento.Day >= DateTime.Now.Day) && (form["nome"] != ""))
             {

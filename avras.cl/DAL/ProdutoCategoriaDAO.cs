@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using avras.cl.Models;
 namespace avras.cl.DAL
@@ -27,6 +28,34 @@ namespace avras.cl.DAL
             catch (Exception ex)
             {
                 return -1;
+            }
+        }
+        internal ProdutoCategoria BuscarCategoriaPorId(int id)
+        {
+            try
+            {
+                using (avrastesteContext contexto = new avrastesteContext())
+                {
+                    return contexto.ProdutoCategoria.Find(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        internal List<ProdutoCategoria> BuscarCategorias()
+        {
+            try
+            {
+                using (avrastesteContext contexto = new avrastesteContext())
+                {
+                    return contexto.ProdutoCategoria.OrderBy(p => p.Nome).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
         /*internal int Alterar(ProdutoCategoria pAlterado)
