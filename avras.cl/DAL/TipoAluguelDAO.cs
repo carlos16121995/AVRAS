@@ -1,25 +1,26 @@
-﻿using System;
+﻿using avras.cl.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using avras.cl.Models;
+
 namespace avras.cl.DAL
 {
-    internal class ProdutoCategoriaDAO
+    class TipoAluguelDAO
     {
-        internal int Gravar(ProdutoCategoria produtoCategoria)
+        internal int Gravar(TipoAluguel tipoAluguel)
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    if (produtoCategoria.Id == 0)
+                    if (tipoAluguel.Id == 0)
                     {
-                        contexto.ProdutoCategoria.Add(produtoCategoria);
+                        contexto.TipoAluguel.Add(tipoAluguel);
                     }
                     else
                     {
-                        contexto.ProdutoCategoria.Attach(produtoCategoria);
+                        contexto.TipoAluguel.Attach(tipoAluguel);
 
                     }
                     return contexto.SaveChanges();
@@ -30,13 +31,13 @@ namespace avras.cl.DAL
                 return -1;
             }
         }
-        internal ProdutoCategoria BuscarCategoriaPorId(int id)
+        internal TipoAluguel BuscarTipoAluguelPorId(int id)
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    return contexto.ProdutoCategoria.Find(id);
+                    return contexto.TipoAluguel.Find(id);
                 }
             }
             catch (Exception ex)
@@ -44,13 +45,13 @@ namespace avras.cl.DAL
                 return null;
             }
         }
-        internal List<ProdutoCategoria> BuscarCategorias()
+        internal List<TipoAluguel> BuscarTipoAluguel()
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    return contexto.ProdutoCategoria.OrderBy(p => p.Nome).ToList();
+                    return contexto.TipoAluguel.OrderBy(p => p.Nome).ToList();
                 }
             }
             catch (Exception ex)
@@ -58,15 +59,15 @@ namespace avras.cl.DAL
                 return null;
             }
         }
-        internal int Alterar(ProdutoCategoria ptAlterado)
+        internal int Alterar(TipoAluguel taAlterado)
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    var pAtual = contexto.ProdutoCategoria.Where(p => p.Id == ptAlterado.Id).FirstOrDefault();
-                    pAtual.Nome = ptAlterado.Nome;
-                    pAtual.Descricao = ptAlterado.Descricao;
+                    var tpAtual = contexto.TipoAluguel.Where(p => p.Id == taAlterado.Id).FirstOrDefault();
+                    tpAtual.Nome = taAlterado.Nome;
+                    tpAtual.Valor = taAlterado.Valor;
                     return contexto.SaveChanges();
                 }
             }
@@ -81,10 +82,10 @@ namespace avras.cl.DAL
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    var produtoCategoria = contexto.ProdutoCategoria.Where(p => p.Id == id).FirstOrDefault();
-                    if (produtoCategoria != null)
+                    var tipoAluguel = contexto.TipoAluguel.Where(p => p.Id == id).FirstOrDefault();
+                    if (tipoAluguel != null)
                     {
-                        contexto.ProdutoCategoria.Remove(produtoCategoria);
+                        contexto.TipoAluguel.Remove(tipoAluguel);
                         return contexto.SaveChanges();
                     }
                     else

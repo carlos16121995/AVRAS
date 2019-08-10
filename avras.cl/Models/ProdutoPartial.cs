@@ -27,7 +27,6 @@ namespace avras.cl.Models
         {
             return new ProdutoDAO().BuscarProdutosPorId(id);
         }
-
         public int Excluir(int id)
         {
             return new ProdutoDAO().Excluir(id);

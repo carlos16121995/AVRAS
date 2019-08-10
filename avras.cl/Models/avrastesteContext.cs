@@ -30,7 +30,7 @@ namespace avras.cl.Models
         public virtual DbSet<Patrocinadores> Patrocinadores { get; set; }
         public virtual DbSet<Pendencia> Pendencia { get; set; }
         public virtual DbSet<Pessoa> Pessoa { get; set; }
-        public virtual DbSet<Produto> Produto { get; set; }
+        public virtual DbSet<Produto> TipoProduto { get; set; }
         public virtual DbSet<ProdutoCategoria> ProdutoCategoria { get; set; }
         public virtual DbSet<Receber> Receber { get; set; }
         public virtual DbSet<RetiradaCaixa> RetiradaCaixa { get; set; }

@@ -17,11 +17,11 @@ namespace avras.cl.DAL
                 {
                     if (produto.Id == 0)
                     {
-                        contexto.Produto.Add(produto);
+                        contexto.TipoProduto.Add(produto);
                     }
                     else
                     {
-                        contexto.Produto.Attach(produto);
+                        contexto.TipoProduto.Attach(produto);
 
                     }
                     return contexto.SaveChanges();
@@ -38,7 +38,7 @@ namespace avras.cl.DAL
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    var pAtual = contexto.Produto.Where(p => p.Id == pAlterado.Id).Include("Categoria").FirstOrDefault();
+                    var pAtual = contexto.TipoProduto.Where(p => p.Id == pAlterado.Id).Include("Categoria").FirstOrDefault();
                     pAtual.Nome = pAlterado.Nome;
                     pAtual.ValorVenda = pAlterado.ValorVenda;
                     pAtual.ValorCompra = pAlterado.ValorCompra;
@@ -63,7 +63,7 @@ namespace avras.cl.DAL
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    return contexto.Produto.Find(id);
+                    return contexto.TipoProduto.Find(id);
                 }
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@ namespace avras.cl.DAL
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
                     nome = "%" + nome + "%";
-                    return (from p in contexto.Produto
+                    return (from p in contexto.TipoProduto
                             where EF.Functions.Like(p.Nome, nome)
                             select p).ToList();
                 }
@@ -94,7 +94,7 @@ namespace avras.cl.DAL
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    return contexto.Produto.OrderBy(p => p.Nome).ToList();
+                    return contexto.TipoProduto.OrderBy(p => p.Nome).ToList();
                 }
             }
             catch (Exception ex)
@@ -108,10 +108,10 @@ namespace avras.cl.DAL
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    var produto = contexto.Produto.Where(p => p.Id == id).FirstOrDefault();
+                    var produto = contexto.TipoProduto.Where(p => p.Id == id).FirstOrDefault();
                     if (produto != null)
                     {
-                        contexto.Produto.Remove(produto);
+                        contexto.TipoProduto.Remove(produto);
                         return contexto.SaveChanges();
                     }
                     else

@@ -1,25 +1,26 @@
-﻿using System;
+﻿using avras.cl.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using avras.cl.Models;
+
 namespace avras.cl.DAL
 {
-    internal class ProdutoCategoriaDAO
+    class TipoContaDAO
     {
-        internal int Gravar(ProdutoCategoria produtoCategoria)
+        internal int Gravar(TipoConta tipoConta)
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    if (produtoCategoria.Id == 0)
+                    if (tipoConta.Id == 0)
                     {
-                        contexto.ProdutoCategoria.Add(produtoCategoria);
+                        contexto.TipoConta.Add(tipoConta);
                     }
                     else
                     {
-                        contexto.ProdutoCategoria.Attach(produtoCategoria);
+                        contexto.TipoConta.Attach(tipoConta);
 
                     }
                     return contexto.SaveChanges();
@@ -30,13 +31,13 @@ namespace avras.cl.DAL
                 return -1;
             }
         }
-        internal ProdutoCategoria BuscarCategoriaPorId(int id)
+        internal TipoConta BuscarTipoContaPorId(int id)
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    return contexto.ProdutoCategoria.Find(id);
+                    return contexto.TipoConta.Find(id);
                 }
             }
             catch (Exception ex)
@@ -44,13 +45,13 @@ namespace avras.cl.DAL
                 return null;
             }
         }
-        internal List<ProdutoCategoria> BuscarCategorias()
+        internal List<TipoConta> BuscarTipoConta()
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    return contexto.ProdutoCategoria.OrderBy(p => p.Nome).ToList();
+                    return contexto.TipoConta.OrderBy(p => p.Nome).ToList();
                 }
             }
             catch (Exception ex)
@@ -58,15 +59,15 @@ namespace avras.cl.DAL
                 return null;
             }
         }
-        internal int Alterar(ProdutoCategoria ptAlterado)
+        internal int Alterar(TipoConta tcAlterado)
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    var pAtual = contexto.ProdutoCategoria.Where(p => p.Id == ptAlterado.Id).FirstOrDefault();
-                    pAtual.Nome = ptAlterado.Nome;
-                    pAtual.Descricao = ptAlterado.Descricao;
+                    var tcAtual = contexto.TipoConta.Where(p => p.Id == tcAlterado.Id).FirstOrDefault();
+                    tcAtual.Nome = tcAlterado.Nome;
+                    tcAtual.Descricao = tcAlterado.Descricao;
                     return contexto.SaveChanges();
                 }
             }
@@ -81,10 +82,10 @@ namespace avras.cl.DAL
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    var produtoCategoria = contexto.ProdutoCategoria.Where(p => p.Id == id).FirstOrDefault();
-                    if (produtoCategoria != null)
+                    var tipoConta = contexto.TipoConta.Where(p => p.Id == id).FirstOrDefault();
+                    if (tipoConta != null)
                     {
-                        contexto.ProdutoCategoria.Remove(produtoCategoria);
+                        contexto.TipoConta.Remove(tipoConta);
                         return contexto.SaveChanges();
                     }
                     else

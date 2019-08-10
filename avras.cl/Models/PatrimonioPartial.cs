@@ -23,7 +23,7 @@ namespace avras.cl.Models
         {
             return new PatrimonioDAO().BuscarPatrimoniosPorNome(nome);
         }
-        public Patrimonio BuscarProdutosPorId(int id)
+        public Patrimonio BuscarPatrimoniosPorId(int id)
         {
             return new PatrimonioDAO().BuscarPatrimoniosPorId(id);
         }
