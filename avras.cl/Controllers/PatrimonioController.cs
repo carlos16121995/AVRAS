@@ -126,7 +126,7 @@ namespace avras.cl.Controllers
                 Disponível = produto.Disponível,
             };
         }
-        public List<ProdutoViewModel> BuscarTipoPorId(string nome, bool includeCategoria = false)
+        public List<PatrimonioViewModel> BuscarTipoPorId(string nome, bool includeCategoria = false)
         {
             var produtos = new Produto().BuscarProdutosPorNome(nome);
             if (produtos != null && produtos.Count > 0)
