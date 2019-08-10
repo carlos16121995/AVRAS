@@ -11,6 +11,8 @@ using System.Net.Mail;
 using System.Net;
 using cl = avras.cl.Controllers;
 using avras.web.Filters;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace avras.web.Controllers
 {

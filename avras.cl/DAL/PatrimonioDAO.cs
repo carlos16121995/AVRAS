@@ -59,13 +59,13 @@ namespace avras.cl.DAL
                 return -1;
             }
         }
-        internal Produto BuscarProdutosPorId(int id)
+        internal Patrimonio BuscarPatrimoniosPorId(int id)
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    return contexto.Produto.Find(id);
+                    return contexto.Patrimonio.Find(id);
                 }
             }
             catch (Exception ex)
@@ -73,14 +73,14 @@ namespace avras.cl.DAL
                 return null;
             }
         }
-        internal List<Produto> BuscarProdutosPorNome(string nome)
+        internal List<Patrimonio> BuscarPatrimoniosPorNome(string nome) 
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
                     nome = "%" + nome + "%";
-                    return (from p in contexto.Produto
+                    return (from p in contexto.Patrimonio
                             where EF.Functions.Like(p.Nome, nome)
                             select p).ToList();
                 }
@@ -90,13 +90,13 @@ namespace avras.cl.DAL
                 return null;
             }
         }
-        internal List<Produto> BuscarProdutos()
+        internal List<Patrimonio> BuscarProdutos()
         {
             try
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    return contexto.Produto.OrderBy(p => p.Nome).ToList();
+                    return contexto.Patrimonio.OrderBy(p => p.Nome).ToList();
                 }
             }
             catch (Exception ex)
@@ -110,10 +110,10 @@ namespace avras.cl.DAL
             {
                 using (avrastesteContext contexto = new avrastesteContext())
                 {
-                    var produto = contexto.Produto.Where(p => p.Id == id).FirstOrDefault();
-                    if (produto != null)
+                    var patrimonio = contexto.Patrimonio.Where(p => p.Id == id).FirstOrDefault();
+                    if (patrimonio != null)
                     {
-                        contexto.Produto.Remove(produto);
+                        contexto.Patrimonio.Remove(patrimonio);
                         return contexto.SaveChanges();
                     }
                     else
