@@ -25,7 +25,7 @@ namespace avras.cl.Models
         }
         public int Excluir(int id)
         {
-            return new TipoContaDAO().Excluir(id);
+            return new ProdutoCategoriaDAO().Excluir(id);
         }
     }
 }

@@ -7,7 +7,7 @@
     <title></title>
     <script src="~/lib/jquery-3.3.1.js"></script>
     <script src="~/lib/popper.js"></script>
-
+    <link rel="shortcut icon" href="~/images/Avras.png">
     <script src="~/lib/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
     <link href="~/lib/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/css/Layout_Site.css" rel="stylesheet" />
@@ -76,22 +76,22 @@
                         <a href="/Usuario/Aluguel" class="text-body nav-link texto-branco text-center">Alugar Salão</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
-                        <a href="/Home/PerguntasFrequentes" class="text-body nav-link texto-branco text-center">Perguntas Frequentes</a>
-                    </div>
-                    <div class="col-lg-2 my-3 my-lg-0">
                         <a href="/Usuario/Perfil" class="text-body nav-link texto-branco text-center">Tornar-se Sócio</a>
                     </div>
                     <div class="col-lg-2 my-3 my-lg-0">
                         <a href="/Home/Contato" class="text-body nav-link texto-branco text-center">Contato</a>
                     </div>
-                    <div class="col-lg-2 my-5 my-lg-0">
+                    <div class="col-lg-2 my-3 my-lg-0">
+                        <a href="/Home/Inicio" class="text-body nav-link texto-branco text-center">Painel</a>
+                    </div>
+                    <div class="col-lg-2 my-5 my-lg-0 ">
                         @if (Context.Request.Cookies["email"] != null && Context.Request.Cookies["senha"] != null)
                         {
                             <h2><a href="/Usuario/Logout" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Sair</a></h2>
                         }
                         else
                         {
-                            <h2><a href="/Usuario/Index" class="text-body nav-link txt-preto texto-branco text-center" id="btn-entrar">Entrar</a></h2>
+                            <h2><a href="/Usuario/Index" class="text-body nav-link txt-preto  texto-branco text-center" id="btn-entrar">Entrar</a></h2>
                         }
                     </div>
                 </div>
@@ -118,7 +118,7 @@
                 <a href="#" class="text-decoration-none text-light my-5">Parceiros</a><br />
                 <a href="/Home/Contato" class="text-decoration-none text-light my-5">Contato</a><br />
                 <a href="/Home/PerguntasFrequentes" class="text-decoration-none text-light my-5">Perguntas frequentes</a><br />
-</div>
+            </div>
         </div>
         <div class="container text-center">
             <img src="~/images/Avras.png" class="logo mx-auto w-25" alt="Logotipo da empresa" /><br />

@@ -67,7 +67,7 @@ namespace avras.web.Controllers
             }
             return View();
         }
-        public JsonResult Autenticar(IFormCollection form)
+        public IActionResult Autenticar(IFormCollection form)
         {
             
             cl.Controllers.PessoaController pessoa = new cl.Controllers.PessoaController();
@@ -95,7 +95,6 @@ namespace avras.web.Controllers
 
             return RedirectToAction("Index", "Usuario");
         }
-        [ValidarAcesso(Order = 1)]
         [Route("Usuario/Index/{cpf}")]
         public IActionResult Cadastro(string cpf)
         {
@@ -108,17 +107,17 @@ namespace avras.web.Controllers
             ViewBag.Cpf = "";
             return View();
         }
-        [ValidarAcesso(Order = 1)]
+        
         public IActionResult Lista()
         {
             return View();
         }
-        [ValidarAcesso(Order = 1)]
+       
         public JsonResult Excluir(int id)
         {
             return Json(id > 0 ? new cl.Controllers.PessoaController().Excluir(id) : -10);
         }
-        [ValidarAcesso(Order = 1)]
+        
         public JsonResult Gravar(IFormCollection form)
         {
             string Cpf, Nome, Telefone, Email, Senha, Observacoes, Cep, Cidade, Rua, Bairro, Complemento;
@@ -235,7 +234,7 @@ namespace avras.web.Controllers
             return Json(retorno);
 
         }
-        [ValidarAcesso(Order = 1)]
+        
         public JsonResult BuscarPorCpf(string str)
         {
             if (ValidaCpf(str, out string cpf))
@@ -249,14 +248,14 @@ namespace avras.web.Controllers
             }
             return Json(null);
         }
-        [ValidarAcesso(Order = 1)]
+        
         public JsonResult BuscarUsuarios()
         {
             List<PessoaViewModel> pessoa = new cl.Controllers.PessoaController().BuscarUsuarios(true); /*váriavel boolean traz ou não o endereço*/
 
             return Json(pessoa);
         }
-        [ValidarAcesso(Order = 1)]
+        
         public JsonResult BuscarPorNome(string nome)
         {
             int erros = 0;
@@ -270,7 +269,7 @@ namespace avras.web.Controllers
             }
             return Json(erros);
         }
-        [ValidarAcesso(Order = 1)]
+        
         private string EnviarEmail(string nomeFrom, List<string> emailPara, string assunto, string texto)
         {
             string emailFrom = "avrasteste@gmail.com";
@@ -309,7 +308,7 @@ namespace avras.web.Controllers
                 msg.Dispose();
             }
         }
-        [ValidarAcesso(Order = 1)]
+        
         /*   Validações de campos de formulário
          * 
          * 
@@ -334,7 +333,7 @@ namespace avras.web.Controllers
             }
             return resultado;
         }
-        [ValidarAcesso(Order = 1)]
+        
         private bool ValidaCpf(string cpf, out string str)
         {
             str = cpf;

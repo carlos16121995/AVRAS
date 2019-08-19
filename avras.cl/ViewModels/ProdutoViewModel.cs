@@ -15,7 +15,7 @@ namespace avras.cl.ViewModels
         public int Quantidade { get; set; }
         public int QuantidadeMinima { get; set; }
 
-        public virtual ProdutoCategoriaViewModel Categoria { get; set; }
+        public virtual ProdutoCategoria Categoria { get; set; }
         public virtual ICollection<ItensVendaViewModel> ItensVenda { get; set; }
     }
 }

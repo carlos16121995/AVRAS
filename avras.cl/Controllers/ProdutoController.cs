@@ -113,13 +113,13 @@ namespace avras.cl.Controllers
         }
 
         // Tipos e Categorias
-        public List<ProdutoCategoriaViewModel> Listar()
+        public List<ViewModels.ProdutoCategoria> Listar()
         {
-            var categorias = new ProdutoCategoria().BuscarProdutoCategoria();
+            var categorias = new Models.ProdutoCategoria().BuscarProdutoCategoria();
             if (categorias != null && categorias.Count > 0)
 
                 return (from categoria in categorias
-                        select new ProdutoCategoriaViewModel()
+                        select new ViewModels.ProdutoCategoria()
                         {
                             Id = categoria.Id,
                             Nome = categoria.Nome,
@@ -130,21 +130,21 @@ namespace avras.cl.Controllers
         }
         
         
-        private ProdutoCategoriaViewModel BuscarCategoriaPorId(int id)
+        public ViewModels.ProdutoCategoria BuscarCategoriaPorId(int id)
         {
-            var categoria = new ProdutoCategoria().BuscarProdutoCategoriaPorId(id);
-            return new ProdutoCategoriaViewModel()
+            var categoria = new Models.ProdutoCategoria().BuscarProdutoCategoriaPorId(id);
+            return new ViewModels.ProdutoCategoria()
             {
                 Id = categoria.Id,
                 Nome = categoria.Nome,
                 Descricao = categoria.Descricao,
             };
         }
-        public int Gravar(ProdutoCategoriaViewModel p)
+        public int Gravar(ViewModels.ProdutoCategoria p)
         {
             int result;
 
-            ProdutoCategoria produtoCategoria = new ProdutoCategoria()
+            Models.ProdutoCategoria produtoCategoria = new Models.ProdutoCategoria()
             {
                 Nome = p.Nome,
                 Descricao = p.Descricao,
@@ -162,9 +162,9 @@ namespace avras.cl.Controllers
 
             return result;
         }
-        public int Alterar(ProdutoCategoriaViewModel p)
+        public int Alterar(ViewModels.ProdutoCategoria p)
         {
-            ProdutoCategoria produtoCategoria = new ProdutoCategoria()
+            Models.ProdutoCategoria produtoCategoria = new Models.ProdutoCategoria()
             {
                 Id = p.Id,
                 Nome = p.Nome,
@@ -174,7 +174,7 @@ namespace avras.cl.Controllers
         }
         public int ExcluirProdutoCategoria(int id)
         {
-            return new ProdutoCategoria().Excluir(id);
+            return new Models.ProdutoCategoria().Excluir(id);
         }
 
 
