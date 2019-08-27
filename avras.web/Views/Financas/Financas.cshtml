@@ -4,5 +4,44 @@
     Layout = "~/Views/Shared/_Layout_Painel.cshtml";
 }
 
-<h2>Financas</h2>
+<h4 class="text-center my-3 my-lg-5">Gerenciar Finanças</h4>
+<div class="card-deck center-block container mx-auto">
+    <div class="row col-12">
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Financas/Adicionar_Contas';">
+            <img src="~/images/finanças.png" class="mt-4 logo mx-auto " alt="Imagem de um homem em frente a caixas empilhadas" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Financas/Adicionar_Contas" class="text-dark"> Adicionar Contas </a></p>
+            </div>
+        </div>
+
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Financas/Caixa';">
+            <img src="~/images/contas.png" class=" mt-4 logo mx-auto" alt="Imagem de uma prancheta para Anotações" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Financas/Caixa" class="text-dark"> Caixa </a></p>
+            </div>
+        </div>
+    </div>
+    <div class=" row col-12">
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Financas/TipoConta';">
+            <img src="~/images/settings.png" class=" mt-4 logo mx-auto" alt="Imagem de uma engrenagem" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Financas/TipoConta" class="text-dark"> Tipo de Conta </a></p>
+            </div>
+        </div>
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Financas/ContaCorrente';">
+            <img src="~/images/point-of-service.png" class=" mt-4 logo mx-auto" alt="Imagem de uma engrenagem" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Financas/ContaCorrente" class="text-dark"> ContaCorrente </a></p>
+            </div>
+        </div>
+    </div>
+    <div class=" row col-12">
+        <div class="card col-12 col-lg-12 border-light mx-auto" onclick="window.location.href='/Financas/Caixa';">
+            <img src="~/images/finanças.png" class=" mt-4 logo mx-auto" alt="Imagem de uma engrenagem" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Financas/Caixa" class="text-dark"> outro </a></p>
+            </div>
+        </div>
+    </div>
+</div>
 

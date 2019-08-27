@@ -4,5 +4,31 @@
     Layout = "~/Views/Shared/_Layout_Painel.cshtml";
 }
 
-<h2>Patrimonio</h2>
+<h4 class="text-center my-3 my-lg-5">Gerenciar Patrimonio</h4>
+
+<div class="card-deck container mx-auto">
+    <div class="row col-12 mx-auto">
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Patrimonio/Cadastro';">
+            <img src="~/images/patrimonio.png" class="mt-4 logo mx-auto " alt="Imagem de 3 pessoas uma maleta" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Patrimonio/Cadastro" class="text-dark"> Cadastrar Patrimonio </a></p>
+            </div>
+        </div>
+
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='Listar_Patrimonio';">
+            <img src="~/images/Listar.png" class=" mt-4 logo mx-auto" alt="Imagem de uma prancheta para Anotações" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Patrimonio/Lista" class="text-dark"> Patrimonios Cadastrados </a></p>
+            </div>
+        </div>
+    </div>
+    <div class=" row col-12">
+        <div class="card col-12 col-lg-12 border-light mx-auto" onclick="window.location.href='/Patrimonio/TipoPatrimonio';">
+            <img src="~/images/settings.png" class=" mt-4 logo mx-auto" alt="Imagem de uma engrenagem" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Patrimonio/TipoPatrimonio" class="text-dark">Adicionar Tipos de Patrimonio</a></p>
+            </div>
+        </div>
+    </div>
+</div>
 

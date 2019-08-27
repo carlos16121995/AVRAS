@@ -265,7 +265,7 @@ function validaNome() {
 }
 function validaEmail() {
     var email = $("#email").val();
-    if (email.includes("@@")) {
+    if (email.includes("@")) {
         $("#email").focus();
         $("#email").addClass("is-valid");
         if ($("#email").hasClass("is-invalid"))

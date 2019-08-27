@@ -1,0 +1,288 @@
+﻿
+@{
+    ViewData["Title"] = "TipoCargo";
+    Layout = "~/Views/Shared/_Layout_Painel.cshtml";
+}
+@section Script{
+    <script src="~/lib/fancybox-master/dist/jquery.fancybox.js"></script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            carregarSelect();
+        });
+        function carregarSelect() {
+            $("#carregando").html('<i class="fas fa-spinner fa-spin">');
+            $.ajax({
+                type: 'GET',
+                url: '/Diretoria/BuscarTipos',
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.cargo != null) {
+                        $("#tipo").html("<option>--Selecione um Cargo para editar--</option>");
+                        sel = document.getElementById("tipo");
+
+                        for (var i = 0; i < data.cargo.length; i++) {
+
+                            var option = document.createElement("option");
+
+                            option.value = data.cargo[i].id;
+                            option.text = data.cargo[i].nome;
+                            sel.appendChild(option);
+                        }
+                    }
+                    $("#carregando").html('');
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        }
+        function Selecionar() {
+            var id = $("#tipo").val();
+            var form = {
+                Id: id
+            };
+            if (id > 0) {
+                $.getJSON('/Diretoria/BuscarCategoria', form, function (TipoCargo) {
+                    $("#id").val(TipoCargo.id);
+                    $("#nome").val(TipoCargo.nome);
+                    if ($(".permissao option").has('selected')) {
+                        $(".permissao option").removeAttr('selected');
+                    }
+                    $(".permissao option[value='" + TipoCargo.permissao + "']").attr('selected', 'selected');
+                    $("#descricao").val(TipoCargo.descricao);
+                    var txt = '<button class="btn btn-dark float-right my-3 " onclick="javascript: Gravar();" type="button">Alterar</button>';
+                    $("#gravar").html(txt);
+                    $("#carregando").html('');
+                    $("#excluir").html("<button class='btn btn-danger float-left my-3 ml-3' type='button' onclick='javascript: confirmaExcluir(" + TipoCargo.id + ");'>Excluir</button>")
+                });
+            }
+            
+        }
+        function Limpar() {
+            $("#id").val("0");
+            $("#nome").val("");
+            $("#descricao").val("");
+            if ($(".permissao option").has('selected')) {
+                 $(".permissao option").removeAttr('selected');
+            }
+            $(".permissao option[value='" + 0 + "']").attr('selected', 'selected');
+            var txt = '<button class="btn btn-dark float-right my-3 " onclick="javascript: Gravar();" type="button">Gravar</button>';
+            $("#gravar").html(txt);
+            $("#divResultado").html("");
+            $("#excluir").html("");
+        }
+        function Gravar() {
+            if (validaNome()) {
+                var formData = new FormData();
+                formData.append("Id", $("#id").val());
+                formData.append("Nome", $("#nome").val());
+                formData.append("permissao", $("#permissao").val());
+                formData.append("descricao", $("#descricao").val());
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Diretoria/GravarTipoCargo',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response > 0) {
+                            Limpar();
+                            carregarSelect();
+                        }
+                        else {
+                            var botoes = '<button type="button" class="btn btn-dark txt-branco" data-dismiss="modal">Cancelar</button>';
+                            var titulo = "Alerta do sistema"
+                            var corpo = "Preencha todos os campos corretamente";
+                            $("#botao").html(botoes);
+                            $("#titulo").html(titulo);
+                            $("#corpo").html(corpo);
+                            $('#Erro').modal('show');
+                        }
+                        
+                    },
+                    error: function (error) {
+                        alert(error);
+                    }
+                });
+            }
+        }
+        function validaNome() {
+            var nome = $("#nome").val();
+            if ((nome != "") && (nome.length > 4)) {
+                $("#nome").focus();
+                $("#nome").addClass("is-valid");
+                if ($("#nome").hasClass("is-invalid"))
+                    $("#nome").removeClass("is-invalid");
+                return true;
+            }
+            else
+                $("#nome").focus();
+            $("#nome").addClass("is-invalid");
+            if ($("#nome").hasClass("is-valid"))
+                $("#nome").removeClass("is-valid");
+            return false;
+        }       
+        function confirmaExcluir(id) {
+            $('#titulo').html("Atenção");
+            $('#corpo').html("O item será excluido permanentemente");
+            var botoes = '<button type="button" class="btn btn-dark txt-branco" data-dismiss="modal">Cancelar</button><button type="button" class="btn btn-light vermelho txt-branco" onclick="excluir(' + id + ');" data-dismiss="modal">Excluir</button>';
+            $("#botao").html(botoes);
+            $('#Erro').modal('show');
+        }
+        
+        function excluir(id) {
+            $("#carregando").html('<i class="fas fa-spinner fa-spin">');
+            $.ajax({
+                type: 'POST',
+                url: '/Diretoria/ExcluirTipoCargo',
+                data: { id},
+                success: function (data) {
+                    if (data > 0) {
+                        $('.alert').alert()
+                        carregarSelect();
+                        Limpar();
+                        $("#carregando").html('');
+                    }
+                    if (data == -10) {
+                        $('#Erro').modal('show');
+                        $('#titulo').html("Ops... Ocorreu um erro!");
+                        $('#corpo').html("Tente novamente mais tarde.");
+                        var botoes = '<button type="button" class="btn btn-dark txt-branco" data-dismiss="modal">Cancelar</button>';
+                        $("#botao").html(botoes);
+                        $("#carregando").html('');
+                    }
+                    if (data == -55) {
+                        $('#Erro').modal('show');
+                        $('#titulo').html("Atenção");
+                        $('#corpo').html("O item que você está tentando excluir é protegido!");
+                        var botoes = '<button type="button" class="btn btn-dark txt-branco" data-dismiss="modal">Cancelar</button>';
+                        $("#botao").html(botoes);
+                        $("#carregando").html('');
+                    }
+                },
+                error: function (data) {
+                    $('#Erro').modal('show');
+                    $('#titulo').html("Ops... Ocorreu um erro!");
+                    $('#corpo').html("Tente novamente mais tarde.");
+                    var botoes = '<button type="button" class="btn btn-dark txt-branco" data-dismiss="modal">Cancelar</button>';
+                    $("#botao").html(botoes);
+                    $("#carregando").html('');
+                }
+            });
+        }
+    </script>
+
+}
+@section style {
+    <link href="~/lib/fancybox-master/dist/jquery.fancybox.css" rel="stylesheet" />
+}
+
+<div class="container my-5 ">
+    <div class="row ">
+        <div class="col-lg-1 col-12" align="center">
+            <span> <img src="~/images/estoque.png" class="logo" alt="Imagem de 1 pessoa ao lado de uma pilha de caixas de papelão" /></span>
+        </div>
+        <div class="col-lg-6 col-12 align-self-center float-none">
+            <h2> Cadastro de Cargos </h2><span id="carregando"></span>
+        </div>
+    </div>
+</div>
+
+<div class="container d-block">
+    <form enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                <label for="tipo">Categorias:</label>
+                <select class="tipo form-control" id="tipo" onchange="Selecionar()">
+                    <option>--Selecione um Cargo para editar--</option>
+                </select>
+            </div>
+        </div>
+        <hr class="my-5" />
+        <div class="col-lg-6 col-12 mx-auto my-3 float-none">
+            <h4> Adicionar novo Cargo </h4><span id="carregando"></span>
+        </div>
+        <input type="hidden" id="id" value="0" />
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="form-group col-12">
+                    <label for="nome">Nome:</label>
+                    <input type="text" class="form-control" id="nome" onchange="validaNome();" value="@ViewData["Nome"]" required>
+                    <div class="valid-feedback" id="valida-nome-valid">
+                    </div>
+                    <div class="invalid-feedback" id="valida-nome">
+                        Nome inválido!
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="form-group col-12">
+                    <a href="~/images/Patrocinadores/ipiranga.jpg" data-fancybox="images" data-caption="Permissões">
+                        <i  class="fas fa-info-circle text-danger mr-2"></i><label for="nome" style="color:black">Tipo da Permissão:</label>
+                    </a>
+                    <select class="permissao form-control" id="permissao">
+                        <option value="0">--Selecione uma Permissão--</option>
+                        <option value="1">Presidência e Secretaria</option>
+                        <option value="3">Diretor de Patrimonio</option>
+                        <option value="4">Diretor de Futebol</option>
+                        <option value="5">Diretor de Cozinha</option>
+                        <option value="7">Usuario Comum</option>
+                        <option value="2">Tesouraria</option>
+                        <option value="6">Sócio</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        
+        
+        <div class="col-12 col-lg-12">
+            <div class="form-group">
+                <label for="descricao">Descrição do Cargo</label>
+                <textarea class="form-control" id="descricao" rows="3"></textarea>
+            </div>
+        </div>
+
+
+        <button class="btn btn-dark float-left my-3 " onclick="javascript: Limpar();" type="button">Limpar</button>
+        <div id="excluir">
+
+        </div>
+        <div id="gravar">
+            <button class="btn btn-dark float-right my-3 " onclick="javascript: Gravar();" type="button">Gravar</button>
+        </div>
+
+    </form>
+</div>
+<div class="modal" id="Erro" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titulo">Deseja excluir este Produto?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="corpo">
+                Este produto será excluido permanentemente!
+            </div>
+            <div class="modal-footer" id="botao">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="imgInfo" class="container mb-5 d-none">
+    <div class="row">
+        <div class="col-12 col-lg-3 my-2">
+            <img src="~/images/Patrocinadores/ipiranga.jpg" class="patrocinadores mx-auto d-block w-75" alt="...">
+        </div>
+    </div>
+</div>

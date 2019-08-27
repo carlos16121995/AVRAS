@@ -68,6 +68,7 @@ namespace avras.cl.DAL
                     var tcAtual = contexto.TipoCargo.Where(p => p.Id == tcAlterado.Id).FirstOrDefault();
                     tcAtual.Nome = tcAlterado.Nome;
                     tcAtual.Descricao = tcAlterado.Descricao;
+                    tcAtual.Permissao = tcAlterado.Permissao;
                     return contexto.SaveChanges();
                 }
             }

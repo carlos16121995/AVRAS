@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewData["Title"] = "Novo_Mandado";
+    Layout = "~/Views/Shared/_Layout_Painel.cshtml";
+}
+@section  script{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            carregarCargos();
+        });
+        cargos = [];
+        socios = [];
+
+        function buscarSocios() {
+             $("#socio").attr('disabled', 'disabled');
+            $("#carregando").html('<i class="fas fa-spinner fa-spin">');
+            $.getJSON("/Usuario/BuscarUsuarios", function (data) {
+               $("#socio").html("<option value='0'>--Selecione um Socio para o Cargo--</option>");
+                    sel = document.getElementById("socio");
+                    $("#socio").removeAttr('disabled');
+                    for (var i = 0; i < data.length; i++) {
+                         var add = true;
+                            for (var j = 0; j < socios.length; j++) {
+                                if (socios[j] == data[i].id) {
+                                    add = false;
+                                }
+                            }
+                        if (add) {
+                            var option = document.createElement("option");
+                            option.value = data[i].id;
+                            option.text = data[i].nome;
+                            sel.appendChild(option);
+                        } 
+                    }
+            
+                $("#carregando").html('');
+            });
+        }
+        function carregarCargos() {
+             $("#socio").attr('disabled', 'disabled');
+            $("#carregando").html('<i class="fas fa-spinner fa-spin">');
+            $.ajax({
+                type: 'GET',
+                url: '/Diretoria/BuscarTipos',
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.cargo != null) {
+                        $("#tipo").html("<option value='0'>--Selecione um Cargo para editar--</option>");
+                        sel = document.getElementById("tipo");
+
+                        for (var i = 0; i < data.cargo.length; i++) {
+                            var add = true;
+                            for (var j = 0; j < cargos.length; j++) {
+                                if (cargos[j] == data.cargo[i].id) {
+                                    add = false;
+                                }
+                            }
+                            if (add) {
+                                var option = document.createElement("option");
+                                option.value = data.cargo[i].id;
+                                option.text = data.cargo[i].nome;
+                                sel.appendChild(option);
+                            }
+                        }
+                    }
+                    $("#carregando").html('');
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        }
+        function Adicionar() {
+
+            var idCargo = $("#tipo").val();
+            var nomeCargo = $("#tipo ").find(":selected").text();
+            var idSocio = $("#socio").val();
+            var nomeSocio = $("#socio").find(":selected").text();
+            if (idCargo > 0 && idSocio > 0) {
+                cargos.push(idCargo);
+            socios.push(idSocio);
+            var text = $("#tBody").html();
+                $("#tBody").html(text +
+                    "<tr data-idCargo='" + idCargo + "' data-idSocio='" + idSocio + "' class='cargo'>" +
+                    "<th>" + nomeCargo + "</th>" +
+                    "<td>" + nomeSocio + "</td>" +
+                    "<td>" +
+                    "<button class='btn float-right'  id='" + idCargo + "' onclick='javascript: remover(" + idCargo + "," + idSocio + ");' type='button'>" +
+                    "<i class='fas fa-trash-alt' ></i > " +
+                    "</button>" +
+                    "</td>" +
+                    "</tr>"
+                );
+                carregarCargos();
+            }
+            
+        }
+        function Gravar() {
+            var idCargo = "";
+            var idSocio = "";
+            var cargo = "";
+            var mandato =[];
+            var cont;
+            cargos = document.querySelectorAll(".cargo");
+            for (var i = 0; i < cargos.length; i++) {
+                idCargo = cargos[i].dataset.idcargo;
+                idSocio = cargos[i].dataset.idsocio;
+                cargo = {
+                    idCargo: idCargo,
+                    idSocio: idSocio,
+                };
+                mandato[i] = cargo;
+                if (idCargo < 7) {
+                    cont = cont + 1;
+                }
+            }
+            var data = {
+                mandato
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/Diretoria/Gravar',
+                data: data,
+                success: function (ret) {
+                    if (ret == "1") {
+                    alert("deu");
+                    }
+                    if (ret == "-1") {
+                        alert("fudeu");
+                    }
+                },
+                error: function (data) {
+                    $('#Erro').modal('show');
+                    $('#titulo').html("Ops... Ocorreu um erro!");
+                    $('#corpo').html("Tente novamente mais tarde.");
+                    var botoes = '<button type="button" class="btn btn-dark txt-branco" data-dismiss="modal">Cancelar</button>';
+                    $("#botao").html(botoes);
+                    $("#carregando").html('');
+                }
+            });
+          
+            
+        }
+        function checkAdult(indice) {
+          return indice >= document.getElementById("ageToCheck").value;
+        }
+        function remover(idCargo, idSocio) {
+            var pos = socios.indexOf(idSocio.toString());
+            socios.splice(pos, 1);
+            pos = cargos.indexOf(idCargo.toString());
+            cargos.splice(pos, 1);
+            carregarCargos();
+            var botao = document.getElementById(idCargo);
+            var tbody =  document.getElementById("tBody");
+            tbody.removeChild(botao.parentNode.parentNode);
+        }
+    </script>
+}
+    <div class="container my-5 ">
+        <div class="row ">
+            <div class="col-lg-1 col-12" align="center">
+                <span> <img src="~/images/businessman.png" class="logo" alt="Imagem de 1 pessoa ao lado de uma pilha de caixas de papelão" /></span>
+            </div>
+            <div class="col-lg-6 col-12 align-self-center float-none">
+                <h2> Adicionar Nova Diretoria </h2><span id="carregando"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="container" class="container">
+        <div class="row">
+            <div class="form-group col-12 col-lg-5">
+                <label for="nome">Cargo:</label>
+                <select class="tipo form-control" onchange="buscarSocios()" id="tipo">
+                    <option>--Selecione um Cargo--</option>
+                </select>
+            </div>
+            <div class="form-group col-12 col-lg-5">
+                <label for="nome">Sócio:</label>
+                <select class="tipo form-control" id="socio" >
+                    <option>--Selecione o Sócio--</option>
+                </select>
+            </div>
+            <div class="form-group col-12 col-lg-2">
+                <label for=""></label>
+                <button class="btn btn-dark btn-block" onclick="javascript: Adicionar();" type="button">Adicionar</button>
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th escope="col">Cargo</th>
+                    <th escope="col">Sócio</th>
+                    <th escope="col">#</th>
+                </tr>
+            </thead>
+            <tbody id="tBody">
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th escope="col"><button class="btn btn-dark" onclick="javascript: Limpar();" type="button" >Limpar</button></th>
+                    <th escope="col"></th>
+                    <th escope="col"><button class="btn btn-dark float-right" onclick="javascript: Gravar();" type="button" >Gravar</button></th>
+                </tr>
+            </tfoot>
+        </table>
+        
+
+    </div>

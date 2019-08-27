@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace avras.cl.Controllers
 {
-    class PatrimonioController
+    public class PatrimonioController
     {
         public PatrimonioViewModel BuscarPatrimonioPorId(int id, bool includeTipo = false)
         {
@@ -130,7 +130,7 @@ namespace avras.cl.Controllers
         }
 
         // Buscar por tipo ou categoria
-        private TipoPatrimonioViewModel BuscarTipoPorId(int id)
+        public TipoPatrimonioViewModel BuscarTipoPorId(int id)
         {
             var tipo = new TipoPatrimonio().BuscarTipoPatrimonioPorId(id);
             return new TipoPatrimonioViewModel()

@@ -995,6 +995,10 @@ namespace avras.cl.Models
                     .HasColumnName("nome")
                     .HasMaxLength(45)
                     .IsUnicode(false);
+                entity.Property(e => e.Permissao)
+                    .IsRequired()
+                    .HasColumnName("permissao")
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<TipoConta>(entity =>

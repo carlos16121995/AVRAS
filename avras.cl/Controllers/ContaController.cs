@@ -7,7 +7,7 @@ using System.Text;
 
 namespace avras.cl.Controllers
 {
-    class ContaController
+    public class ContaController
     {
         public List<TipoContaViewModel> Listar()
         {
@@ -26,7 +26,7 @@ namespace avras.cl.Controllers
         }
 
 
-        private TipoContaViewModel BuscarTipoContaPorId(int id)
+        public TipoContaViewModel BuscarTipoContaPorId(int id)
         {
             var tipoConta = new TipoConta().BuscarTipoContaPorId(id);
             return new TipoContaViewModel()

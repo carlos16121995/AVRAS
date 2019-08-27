@@ -4,5 +4,30 @@
     Layout = "~/Views/Shared/_Layout_Painel.cshtml";
 }
 
-<h2>Diretoria</h2>
 
+<h4 class="text-center my-3 my-lg-5">Diretoria</h4>
+<div class="card-deck center-block container mx-auto">
+    <div class="row col-12">
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Diretoria/Novo_Mandato';">
+            <img src="~/images/businessman.png" class="mt-4 logo mx-auto " alt="Imagem de duas pessoas em diagonal entre elas setas curvadas apontadas para a direita formando um circulo" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Diretoria/Novo_Mandato" class="text-dark"> Novo Mandato </a></p>
+            </div>
+        </div>
+
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Diretoria/Mandatos';">
+            <img src="~/images/employee.png" class=" mt-4 logo mx-auto" alt="Imagem de tres homens lado a lado com gravatas" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Diretoria/Mandatos" class="text-dark"> Mandatos Passados </a></p>
+            </div>
+        </div>
+    </div>
+    <div class=" row col-12">
+        <div class="card col-12 col-lg-12 border-light mx-auto" onclick="window.location.href='/Diretoria/TipoCargo';">
+            <img src="~/images/settings.png" class=" mt-4 logo mx-auto" alt="Imagem de uma engrenagem" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Diretoria/TipoCargo" class="text-dark">Adicionar Cargos</a></p>
+            </div>
+        </div>
+    </div>
+</div>
