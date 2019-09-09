@@ -35,14 +35,14 @@ namespace avras.web.Controllers
         {
             return View();
         }
-        public IActionResult ProdutoCategoria()
+        public IActionResult TipoProdutoViewModel()
         {
             return View();
         }
         [Route("Estoque/Index/{id}")]
         public IActionResult AdicionarProduto(string id)
         {
-            
+
             ViewBag.Id = id;
             return View();
         }
@@ -50,11 +50,11 @@ namespace avras.web.Controllers
         {
             int idx;
             int.TryParse(id, out idx);
-            cl.ViewModels.ProdutoCategoria prod = new cl.Controllers.ProdutoController().BuscarCategoriaPorId(idx);
+            cl.ViewModels.TipoProdutoViewModel prod = new cl.Controllers.ProdutoController().BuscarCategoriaPorId(idx);
             var ret = new
             {
                 produto = prod,
-                base64 = Ler(prod.Descricao),
+                base64 = Ler(prod.SrcImagem),
             };
             return Json(ret);
         }
@@ -102,7 +102,7 @@ namespace avras.web.Controllers
 
             // Grava a nova imagem no servidor
             newBMP.Save(nomeArquivo, pngEncoder, myEncoderParameters);
-            
+
             //Convertendo para base64
             MemoryStream ms = new MemoryStream();
             newBMP.Save(ms, ImageFormat.Png);
@@ -142,11 +142,11 @@ namespace avras.web.Controllers
                         if (ret.Err == 1)
                         {
                             ProdutoController prod = new ProdutoController();
-                            ProdutoCategoria p = new ProdutoCategoria()
+                            TipoProdutoViewModel p = new TipoProdutoViewModel()
                             {
                                 Id = id,
                                 Nome = nome,
-                                Descricao = ret.NomeArquivo,
+                                SrcImagem = ret.NomeArquivo,
                             };
                             ret.Err = prod.Alterar(p);
                             return ret;
@@ -163,11 +163,11 @@ namespace avras.web.Controllers
                 else
                 {
                     ProdutoController prod = new ProdutoController();
-                    ProdutoCategoria p = new ProdutoCategoria()
+                    TipoProdutoViewModel p = new TipoProdutoViewModel()
                     {
                         Id = id,
                         Nome = nome,
-                        Descricao = ret.NomeArquivo,
+                        SrcImagem = ret.NomeArquivo,
                     };
                     ret.Err = prod.Alterar(p);
                 }
@@ -175,7 +175,7 @@ namespace avras.web.Controllers
             ret.Err = -99;
             return ret;
         }
-        private  RetornoTipoCategoriaWEB SalvarServidor(IFormCollection form)
+        private RetornoTipoCategoriaWEB SalvarServidor(IFormCollection form)
         {
             RetornoTipoCategoriaWEB ret = new RetornoTipoCategoriaWEB();
             List<object> retorno = new List<object>();
@@ -235,7 +235,7 @@ namespace avras.web.Controllers
             int id = 0;
             int.TryParse(form["Id"], out id);
             string nome = form["Nome"];
-            if(nome != "")
+            if (nome != "")
             {
                 try
                 {
@@ -244,17 +244,17 @@ namespace avras.web.Controllers
                         ret = SalvarServidor(form);
                         if (ret.Err == 1)
                         {
-                            
+
                             ProdutoController prod = new ProdutoController();
-                            ProdutoCategoria p = new ProdutoCategoria()
+                            TipoProdutoViewModel p = new TipoProdutoViewModel()
                             {
                                 Id = id,
                                 Nome = nome,
-                                Descricao = ret.NomeArquivo,
+                                SrcImagem = ret.NomeArquivo,
                             };
                             ret.Err = prod.Gravar(p);
                             return ret;
-                        } 
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -293,7 +293,7 @@ namespace avras.web.Controllers
             quantidade = 0;
             minimo = 0;
 
-           
+
 
             if (form["Nome"] == "")
             {
@@ -329,11 +329,9 @@ namespace avras.web.Controllers
                 ProdutoViewModel produto = new ProdutoViewModel()
                 {
                     Id = id,
-                    Nome=form["Nome"],
-                    ValorCompra = compra,
-                    ValorVenda = venda,
-                    Quantidade = quantidade,
-                    QuantidadeMinima = minimo,
+                    Nome = form["Nome"],
+                    Estoque = quantidade,
+                    EstoqueMinimo = minimo,
                     CategoriaId = Convert.ToInt32(form["CategoriaId"]),
                     Disponível = Convert.ToByte(form["Disponivel"]),
                 };
@@ -359,10 +357,10 @@ namespace avras.web.Controllers
 
             return Json(produto);
         }
-        public JsonResult BuscarProdutoPorNome( string nome)
+        public JsonResult BuscarProdutoPorNome(string nome)
         {
             List<ProdutoViewModel> produto = new ProdutoController().BuscarProdutoPorNome(nome, true); /*váriavel boolean traz ou não a Categoria produto*/
-        
+
             return Json(produto);
         }
         public JsonResult BuscarProdutoPorId(string id)
@@ -381,12 +379,12 @@ namespace avras.web.Controllers
             string caminho = _env.WebRootPath + @"\images\categoriasProduto\" + nome;
             System.IO.File.Delete(caminho);
         }
-        public JsonResult ExcluirProdutoCategoria(int id, string nome)
+        public JsonResult ExcluirTipoProdutoViewModel(int id, string nome)
         {
             try
             {
                 ExcluirImagem(nome);
-                var ret = new ProdutoController().ExcluirProdutoCategoria(id);
+                var ret = new ProdutoController().ExcluirTipoProduto(id);
                 return Json(ret);
             }
             catch

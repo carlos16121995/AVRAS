@@ -5,20 +5,22 @@ namespace avras.cl.Models
 {
     internal partial class ControleCaixa
     {
-        public int Id { get; set; }
-        public int CaixaId { get; set; }
-        public string Descricao { get; set; }
-        public DateTime DataAbertura { get; set; }
-        public DateTime? DataFechamento { get; set; }
-        public decimal ValorAbertura { get; set; }
-        public decimal? ValorFechamento { get; set; }
-        public int PessoaId { get; set; }
-        public int? ContaId { get; set; }
-        public int? RetiradaCaixaId { get; set; }
+        internal ControleCaixa()
+        {
+            Receber = new HashSet<Receber>();
+        }
 
-        public virtual Caixa Caixa { get; set; }
-        public virtual Conta Conta { get; set; }
-        public virtual Pessoa Pessoa { get; set; }
-        public virtual RetiradaCaixa RetiradaCaixa { get; set; }
+        internal int Id { get; set; }
+        internal int CaixaId { get; set; }
+        internal string Descricao { get; set; }
+        internal DateTime DataAbertura { get; set; }
+        internal DateTime? DataFechamento { get; set; }
+        internal decimal ValorAbertura { get; set; }
+        internal decimal? ValorFechamento { get; set; }
+        internal int PessoaId { get; set; }
+
+        internal virtual Caixa Caixa { get; set; }
+        internal virtual Pessoa Pessoa { get; set; }
+        internal virtual ICollection<Receber> Receber { get; set; }
     }
 }

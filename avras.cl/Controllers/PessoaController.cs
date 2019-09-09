@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using avras.cl.DAL;
 using avras.cl.ViewModels;
 
 namespace avras.cl.Controllers
@@ -17,6 +18,7 @@ namespace avras.cl.Controllers
         public int Gravar(PessoaViewModel p)
         {
             int result;
+            new TempoSociedadeDAO().Check(p.Id, p.Socio);
             Endereco endereco = new Endereco()
             {
                 Cep = p.Endereco.Cep,
@@ -26,6 +28,10 @@ namespace avras.cl.Controllers
                 Numero = p.Endereco.Numero,
                 Complemento = p.Endereco.Complemento,
             };
+            SociedadeTempo sociedadeTempo = new SociedadeTempo();
+           
+
+           
             Pessoa pessoa = new Pessoa()
             {
                 Cpf = p.Cpf,
@@ -65,6 +71,7 @@ namespace avras.cl.Controllers
         /// <returns></returns>
         public int Alterar(PessoaViewModel p)
         {
+            new TempoSociedadeDAO().Check(p.Id, p.Socio);
             Endereco endereco = new Endereco()
             {
                 PessoaId = p.Id,
@@ -128,6 +135,30 @@ namespace avras.cl.Controllers
             return null;
 
         }
+        public PessoaViewModel BuscarPessoaPorId(int id, bool includeEndereco = false)
+        {
+            var p = new Pessoa().BuscarPessoaPorId(id);
+            if (p != null)
+            {
+                return new PessoaViewModel()
+                {
+                    Id = p.Id,
+                    Cpf = p.Cpf,
+                    Nome = p.Nome,
+                    Email = p.Email,
+                    DataNascimento = p.DataNascimento,
+                    Telefone = p.Telefone,
+                    Endereco = (includeEndereco == true ? BuscarEnderecoPorId(p.Id) : null),
+                    Socio = p.Socio,
+                    Jogador = p.Jogador,
+                    Isento = p.Isento,
+                    Observacoes = p.Observacoes,
+                    PendenciaId = p.PendenciaId,
+                };
+            }
+            return null;
+
+        }
         public List<PessoaViewModel> BuscarUsuarioPorNome(string nome, bool includeEndereco = false)
         {
             var pessoas = new Pessoa().BuscarUsuarioPorNome(nome);
@@ -161,9 +192,9 @@ namespace avras.cl.Controllers
         /// </summary>
         /// <param name="includeEndereco">boolean</param>
         /// <returns></returns>
-        public List<PessoaViewModel> BuscarUsuarios(bool includeEndereco = false)
+        public List<PessoaViewModel> BuscarUsuarios(int tipo, bool includeEndereco = false)
         {
-            var pessoas = new Pessoa().BuscarPessoa();
+            var pessoas = new Pessoa().BuscarPessoa(tipo);
             if (pessoas != null && pessoas.Count > 0)
 
                 return (from pessoa in pessoas
@@ -229,7 +260,41 @@ namespace avras.cl.Controllers
                 };
             }
             return null;
+        }
+        // SOCIEDADE TEMPO
 
+        public int Gravar(SociedadeTempoViewModel st)
+        {
+            SociedadeTempo ts = new SociedadeTempo()
+            {
+                DataInicio = st.DataInicio,
+                DataFim = st.DataFim,
+                PessoaId = st.PessoaId,
+            };
+
+            return ts.Gravar();
+        }
+        public List<SociedadeTempoViewModel> BuscarSociedadeTempo(int id)
+        {
+            List<SociedadeTempo> ts = new SociedadeTempo().BuscarSociedadeTempo(id);
+            return (from SociedadeTempo in ts
+                    select new SociedadeTempoViewModel()
+                    {
+                        Id = SociedadeTempo.Id,
+                        DataInicio = SociedadeTempo.DataInicio,
+                        DataFim = SociedadeTempo.DataFim,
+                        PessoaId = SociedadeTempo.PessoaId,
+                        
+                    }).ToList();
+        }
+        public int ExcluirSociedadeTempo(int id)
+        {
+            return new SociedadeTempo().Excluir(id);
+        }
+        public int Alterar(int id)
+        {
+
+            return new SociedadeTempo().Alterar(id);
         }
     }
 }

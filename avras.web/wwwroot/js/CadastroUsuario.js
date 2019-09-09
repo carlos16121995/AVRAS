@@ -113,10 +113,10 @@ function mCPF(cpf) {
                         $("#rua").val(data.pessoa.endereco.rua);
                         $("#numero").val(data.pessoa.endereco.numero);
                         $("#complemento").val(data.pessoa.endereco.complemento);
-                        if (data.pessoa.socio == 0) {
+                        if (data.pessoa.socio == 1) {
                             $(".socio option[value='1']").attr('selected', 'selected');
                         }
-                        if (data.pessoa.jogador == 0) {
+                        if (data.pessoa.jogador == 1) {
                             $(".jogador option[value='1']").attr('selected', 'selected');
                         }
 

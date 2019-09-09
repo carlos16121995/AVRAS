@@ -5,14 +5,14 @@ namespace avras.cl.Models
 {
     internal partial class Endereco
     {
-        public int PessoaId { get; set; }
-        public string Cep { get; set; }
-        public string Cidade { get; set; }
-        public string Bairro { get; set; }
-        public string Rua { get; set; }
-        public int Numero { get; set; }
-        public string Complemento { get; set; }
+        internal int PessoaId { get; set; }
+        internal string Cep { get; set; }
+        internal string Cidade { get; set; }
+        internal string Bairro { get; set; }
+        internal string Rua { get; set; }
+        internal int Numero { get; set; }
+        internal string Complemento { get; set; }
 
-        public virtual Pessoa Pessoa { get; set; }
+        internal virtual Pessoa Pessoa { get; set; }
     }
 }

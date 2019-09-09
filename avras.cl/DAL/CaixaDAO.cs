@@ -12,7 +12,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     if (caixa.Id == 0)
                     {
@@ -35,7 +35,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.Caixa.Find(id);
                 }
@@ -49,7 +49,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.Caixa.OrderBy(p => p.Valor).ToList();
                 }
@@ -63,7 +63,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var cAtual = contexto.Caixa.Where(p => p.Id == cAlterado.Id).FirstOrDefault();
                     cAtual.Valor = cAlterado.Valor;
@@ -79,7 +79,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var caixa = contexto.Caixa.Where(p => p.Id == id).FirstOrDefault();
                     if (caixa != null)

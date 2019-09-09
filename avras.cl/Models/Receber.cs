@@ -5,19 +5,21 @@ namespace avras.cl.Models
 {
     internal partial class Receber
     {
-        public int ContaId { get; set; }
-        public DateTime DataRecebimento { get; set; }
-        public decimal ValorRecebimento { get; set; }
-        public byte Isento { get; set; }
-        public int? AluguelId { get; set; }
-        public int? VendaId { get; set; }
-        public int? PatrocinioId { get; set; }
-        public int? PessoaId { get; set; }
+        internal int ContaId { get; set; }
+        internal DateTime? DataRecebimento { get; set; }
+        internal decimal? ValorRecebimento { get; set; }
+        internal byte Isento { get; set; }
+        internal int? AluguelId { get; set; }
+        internal int? VendaId { get; set; }
+        internal int? PatrocinioId { get; set; }
+        internal int? PessoaId { get; set; }
+        internal int? ControleId { get; set; }
 
-        public virtual Aluguel Aluguel { get; set; }
-        public virtual Conta Conta { get; set; }
-        public virtual Patrocinadores Patrocinio { get; set; }
-        public virtual Pessoa Pessoa { get; set; }
-        public virtual Venda Venda { get; set; }
+        internal virtual Aluguel Aluguel { get; set; }
+        internal virtual Conta Conta { get; set; }
+        internal virtual ControleCaixa Controle { get; set; }
+        internal virtual Patrocinadores Patrocinio { get; set; }
+        internal virtual Pessoa Pessoa { get; set; }
+        internal virtual Venda Venda { get; set; }
     }
 }

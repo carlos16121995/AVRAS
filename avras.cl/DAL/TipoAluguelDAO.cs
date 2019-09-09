@@ -12,7 +12,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     if (tipoAluguel.Id == 0)
                     {
@@ -35,7 +35,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.TipoAluguel.Find(id);
                 }
@@ -49,7 +49,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.TipoAluguel.OrderBy(p => p.Nome).ToList();
                 }
@@ -63,7 +63,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var tpAtual = contexto.TipoAluguel.Where(p => p.Id == taAlterado.Id).FirstOrDefault();
                     tpAtual.Nome = taAlterado.Nome;
@@ -80,7 +80,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var tipoAluguel = contexto.TipoAluguel.Where(p => p.Id == id).FirstOrDefault();
                     if (tipoAluguel != null)

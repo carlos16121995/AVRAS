@@ -8,11 +8,13 @@
 }
 <div class="container my-5">
     <div class="row">
-        <div class="col-lg-1 col-12" align="center">
-            <span> <img src="~/images/socio.png" class="logo" alt="Imagem de 3 pessoas uma ao lado da outra simbolizando uma sociedade" /></span>
+        <div class="col-12" align="center">
+            <span> <img src="~/images/icones-sistema/socio.png" class="logo" alt="Imagem de 3 pessoas uma ao lado da outra simbolizando uma sociedade" /></span>
         </div>
-        <div class="col-lg-6 col-12 align-self-center float-none">
-            <h2> Cadastro de Usuário </h2><span id="carregando"></span>
+    </div>
+    <div class="row">
+        <div class=" col-12 align-self-center float-none">
+            <h2 class="text-center"> Cadastro de Usuário </h2><span id="carregando"></span>
         </div>
     </div>
 
@@ -175,7 +177,15 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row ml-3">
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" value="1" id="isento">
+                    <label class="form-check-label" for="isento" required>Isento?</label>
+                    <div class="valid-feedback" id="valida-isento-valid">
+                    </div>
+                </div>
+                
+            </div>
             <div class="row">
 
                 <div class="form-group  col-12">
@@ -186,14 +196,7 @@
                 </div>
             </div>
 
-            <div class="row ml-3">
-                <div class="form-group form-check ">
-                    <input type="checkbox" class="form-check-input" value="1" id="isento">
-                    <label class="form-check-label" for="isento" required>Isento?</label>
-                    <div class="valid-feedback" id="valida-isento-valid">
-                    </div>
-                </div>
-            </div>
+
 
             <button class="btn btn-dark float-left my-3 pg3" onclick="javascript: usuario.paginacao2();" type="button">Anterior</button>
             <button class="btn btn-dark float-right my-3 pg1" onclick="javascript: usuario.finalizar();" type="button">Finalizar</button>

@@ -12,7 +12,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return (from e in contexto.Endereco
                             where e.PessoaId == id

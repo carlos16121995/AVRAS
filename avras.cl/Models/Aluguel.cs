@@ -5,19 +5,19 @@ namespace avras.cl.Models
 {
     internal partial class Aluguel
     {
-        public Aluguel()
+        internal Aluguel()
         {
             Receber = new HashSet<Receber>();
         }
 
-        public int Id { get; set; }
-        public int PessoaId { get; set; }
-        public int TipoAluguelId { get; set; }
-        public DateTime DataSolicitacao { get; set; }
-        public DateTime DataReserva { get; set; }
+        internal int Id { get; set; }
+        internal int PessoaId { get; set; }
+        internal int TipoAluguelId { get; set; }
+        internal DateTime DataSolicitacao { get; set; }
+        internal DateTime DataReserva { get; set; }
 
-        public virtual Pessoa Pessoa { get; set; }
-        public virtual TipoAluguel TipoAluguel { get; set; }
-        public virtual ICollection<Receber> Receber { get; set; }
+        internal virtual Pessoa Pessoa { get; set; }
+        internal virtual TipoAluguel TipoAluguel { get; set; }
+        internal virtual ICollection<Receber> Receber { get; set; }
     }
 }

@@ -13,15 +13,15 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     if (produto.Id == 0)
                     {
-                        contexto.TipoProduto.Add(produto);
+                        contexto.Produto.Add(produto);
                     }
                     else
                     {
-                        contexto.TipoProduto.Attach(produto);
+                        contexto.Produto.Attach(produto);
 
                     }
                     return contexto.SaveChanges();
@@ -32,21 +32,21 @@ namespace avras.cl.DAL
                 return -1;
             }
         }
-        internal int Alterar(Produto pAlterado)
+        internal int Alterar(Produto palterado)
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
-                    var pAtual = contexto.TipoProduto.Where(p => p.Id == pAlterado.Id).Include("Categoria").FirstOrDefault();
-                    pAtual.Nome = pAlterado.Nome;
-                    pAtual.ValorVenda = pAlterado.ValorVenda;
-                    pAtual.ValorCompra = pAlterado.ValorCompra;
-                    pAtual.Quantidade = pAlterado.Quantidade;
-                    pAtual.QuantidadeMinima = pAlterado.QuantidadeMinima;
-                    pAtual.CategoriaId = pAlterado.CategoriaId;
-                    pAtual.Disponível = pAlterado.Disponível;
-                   
+                    var patual = contexto.Produto.Where(p => p.Id == palterado.Id).FirstOrDefault();
+                    patual.Nome = palterado.Nome;
+                    patual.ValorVenda = palterado.ValorVenda;
+                    
+                    patual.Estoque = palterado.Estoque;
+                    patual.EstoqueMinimo = palterado.EstoqueMinimo;
+                    patual.CategoriaId = palterado.CategoriaId;
+                    patual.Disponível = palterado.Disponível;
+
 
 
                     return contexto.SaveChanges();
@@ -61,9 +61,9 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
-                    return contexto.TipoProduto.Find(id);
+                    return contexto.Produto.Find(id);
                 }
             }
             catch (Exception ex)
@@ -75,10 +75,10 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     nome = "%" + nome + "%";
-                    return (from p in contexto.TipoProduto
+                    return (from p in contexto.Produto
                             where EF.Functions.Like(p.Nome, nome)
                             select p).ToList();
                 }
@@ -92,9 +92,9 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
-                    return contexto.TipoProduto.OrderBy(p => p.Nome).ToList();
+                    return contexto.Produto.OrderBy(p => p.Nome).ToList();
                 }
             }
             catch (Exception ex)
@@ -106,12 +106,12 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
-                    var produto = contexto.TipoProduto.Where(p => p.Id == id).FirstOrDefault();
+                    var produto = contexto.Produto.Where(p => p.Id == id).FirstOrDefault();
                     if (produto != null)
                     {
-                        contexto.TipoProduto.Remove(produto);
+                        contexto.Produto.Remove(produto);
                         return contexto.SaveChanges();
                     }
                     else

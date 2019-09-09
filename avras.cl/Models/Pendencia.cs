@@ -5,19 +5,19 @@ namespace avras.cl.Models
 {
     internal partial class Pendencia
     {
-        public Pendencia()
+        internal Pendencia()
         {
             Pessoa = new HashSet<Pessoa>();
         }
 
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
-        public DateTime DataSolicitacao { get; set; }
-        public DateTime? DataDeferimento { get; set; }
-        public int CargoId { get; set; }
+        internal int Id { get; set; }
+        internal string Nome { get; set; }
+        internal string Descricao { get; set; }
+        internal DateTime DataSolicitacao { get; set; }
+        internal DateTime? DataDeferimento { get; set; }
+        internal int? CargoId { get; set; }
 
-        public virtual Cargo Cargo { get; set; }
-        public virtual ICollection<Pessoa> Pessoa { get; set; }
+        internal virtual Cargo Cargo { get; set; }
+        internal virtual ICollection<Pessoa> Pessoa { get; set; }
     }
 }

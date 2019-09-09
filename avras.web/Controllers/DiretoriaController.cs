@@ -52,8 +52,9 @@ namespace avras.web.Controllers
             int permissao = Convert.ToInt32(form["permissao"]);
             string descricao = form["descricao"];
             string nome = form["nome"];
-            
-            if((nome.Length > 4) &&  ((permissao > 0) && (permissao < 7))){
+
+            if ((nome.Length > 4) && ((permissao > 0) && (permissao < 7)))
+            {
                 TipoCargoViewModel tipoCargo = new TipoCargoViewModel()
                 {
                     Nome = nome,
@@ -84,13 +85,13 @@ namespace avras.web.Controllers
             }
             return Json("-55");
         }
-        public JsonResult Gravar (IFormCollection form)
+        public JsonResult Gravar(IFormCollection form)
         {
             //var tentativa = form.Keys;
             //foreach(var aux in form.Keys)
             //{
             //    var aux2 = aux[$"mandato[{0}][idCargo]"];
-                
+
             //}
             return Json("1");
         }

@@ -14,7 +14,7 @@ namespace avras.cl.Controllers
             Patrocinadores patrocinadores = new Patrocinadores()
             {
                 Nome = p.Nome,
-                DataVencimento = p.DataVencimento,
+                
                 Valor = p.Valor,
                 DataCadastro = p.DataCadastro,
                 Parcelas = p.Parcelas,
@@ -39,7 +39,7 @@ namespace avras.cl.Controllers
             {
                 Id = p.Id,
                 Nome = p.Nome,
-                DataVencimento = p.DataVencimento,
+                
                 Valor = p.Valor,
                 DataCadastro = p.DataCadastro,
                 Parcelas = p.Parcelas,
@@ -55,7 +55,7 @@ namespace avras.cl.Controllers
             {
                 Id = p.Id,
                 Nome = p.Nome,
-                DataVencimento = p.DataVencimento,
+                
                 Valor = p.Valor,
                 DataCadastro = p.DataCadastro,
                 Parcelas = p.Parcelas,
@@ -73,7 +73,7 @@ namespace avras.cl.Controllers
                         {
                             Id = Patrocinadores.Id,
                             Nome = Patrocinadores.Nome,
-                            DataVencimento = Patrocinadores.DataVencimento,
+                           
                             Valor = Patrocinadores.Valor,
                             DataCadastro = Patrocinadores.DataCadastro,
                             Parcelas = Patrocinadores.Parcelas,
@@ -97,7 +97,6 @@ namespace avras.cl.Controllers
                         {
                             Id = patrocinador.Id,
                             Nome = patrocinador.Nome,
-                            DataVencimento = patrocinador.DataVencimento,
                             Valor = patrocinador.Valor,
                             DataCadastro = patrocinador.DataCadastro,
                             Parcelas = patrocinador.Parcelas,

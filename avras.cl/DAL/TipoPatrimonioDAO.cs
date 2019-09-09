@@ -13,7 +13,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     if (tipoPatrimonio.Id == 0)
                     {
@@ -36,7 +36,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.TipoPatrimonio.Find(id);
                 }
@@ -50,7 +50,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.TipoPatrimonio.OrderBy(p => p.Nome).ToList();
                 }
@@ -64,7 +64,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var tpAtual = contexto.TipoPatrimonio.Where(p => p.Id == tpAlterado.Id).FirstOrDefault();
                     tpAtual.Nome = tpAlterado.Nome;
@@ -81,7 +81,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var tipoPatrimonio = contexto.TipoPatrimonio.Where(p => p.Id == id).FirstOrDefault();
                     if (tipoPatrimonio != null)

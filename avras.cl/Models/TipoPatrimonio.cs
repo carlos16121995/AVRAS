@@ -5,15 +5,15 @@ namespace avras.cl.Models
 {
     internal partial class TipoPatrimonio
     {
-        public TipoPatrimonio()
+        internal TipoPatrimonio()
         {
             Patrimonio = new HashSet<Patrimonio>();
         }
 
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
+        internal int Id { get; set; }
+        internal string Nome { get; set; }
+        internal string Descricao { get; set; }
 
-        public virtual ICollection<Patrimonio> Patrimonio { get; set; }
+        internal virtual ICollection<Patrimonio> Patrimonio { get; set; }
     }
 }

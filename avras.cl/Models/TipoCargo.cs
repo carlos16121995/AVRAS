@@ -5,16 +5,16 @@ namespace avras.cl.Models
 {
     internal partial class TipoCargo
     {
-        public TipoCargo()
+        internal TipoCargo()
         {
             Cargo = new HashSet<Cargo>();
         }
 
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
-        public int Permissao { get; set; }
+        internal int Id { get; set; }
+        internal string Nome { get; set; }
+        internal string Descricao { get; set; }
+        internal int Permissao { get; set; }
 
-        public virtual ICollection<Cargo> Cargo { get; set; }
+        internal virtual ICollection<Cargo> Cargo { get; set; }
     }
 }

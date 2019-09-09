@@ -1,0 +1,244 @@
+﻿
+@{
+    ViewData["Title"] = "GerenciarTempoSocio";
+    Layout = "~/Views/Shared/_Layout_Painel.cshtml";
+}
+@section script{ 
+    <script>
+    
+        window.onload = function () {
+                inicio();
+            };
+        function inicio() {
+            $("#carregando").html('<i class="fas fa-spinner fa-spin">');
+            let id = $("#idbusca").val();
+            $.ajax({
+                        type: 'GET',
+                        url: '/Usuario/BuscarSociedadeTempo',
+                        data: {Id: id,},
+                        success: function (data) {
+                            if (data != null) {
+                                carregarCards(data);
+                            }
+                            $("#carregando").html('');
+                        },
+                        error: function (data) {
+                            $('#Erro').modal('show');
+                            $('#titulo').html("Ops... Ocorreu um erro!");
+                            $('#corpo').html("Tente novamente.");
+                            $('#botao').html('<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">Cancelar</button>');
+                            $("#carregando").html('');
+                        }
+            });
+
+        }
+        function FormatarDataPadraoParaIngles(date) {
+            if (date == null) {
+                return "";
+            }
+            var data = date.split("-");
+            var ano = data[0];
+            var mes = data[1];
+            var dia = data[2];
+            dia = dia.slice(0, 2);
+            date = ano + "-" + mes + "-" + dia;
+
+            return date;
+        }
+        function FormatarDataInglesParaPadrao(date) {
+             if (date == null) {
+                return "";
+            }
+            var dia;
+            var mes;
+            var ano;
+            date = new Date(date);
+            dia = date.getDate(date);
+            mes = date.getMonth();
+            ano = date.getFullYear();
+            //var data = date.split("-");
+            //var dia = data[0];
+            //var mes = data[1];
+            //var ano = data[2];
+
+            //date = dia + "/" + mes + "/" + ano;
+
+            return dia + "/" + mes +"/" + ano;
+        }
+        function carregarCards(data) {
+            let text = "";
+            let aberto = "";
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].dataFim != null) {
+                    text += "<tr><td>" + FormatarDataInglesParaPadrao(data[i].dataInicio) + "</td>" +
+                        "<td>" + FormatarDataInglesParaPadrao(data[i].dataFim) + "</td>" +
+                        "<td><button class='btn' onclick='javascript: confirmaExcluir(" + data[i].id + ");'><i class='fas fa-trash-alt' ></i ></button></td>" +
+                        "<td>-</td></tr>";
+                }
+                else {
+                    aberto = "<tr><th scope='col'>" + FormatarDataInglesParaPadrao(data[i].dataInicio) + "</th>" +
+                    "<th scope='col'>" + FormatarDataInglesParaPadrao(data[i].dataFim) + "</th>" +
+                     "<th scope='col'><button class='btn' onclick='javascript: confirmaExcluir(" + data[i].id + ");'><i class='fas fa-trash-alt' ></i ></button></th>" +
+                    "<th scope='col'><i class='far fa-edit' onclick='Alterar("+data[i].id+")'></i></th></tr>";
+                }
+                
+            }
+            $("#tbody").html(aberto + text);
+        }
+        function Alterar(id) {
+           
+            $.ajax({
+                type: 'POST',
+                url: '/Usuario/AlterarSociedadeTempo',
+                data: {Id:id},
+                success: function (data) {
+                       
+                        inicio();
+                        $("#carregando").html('');
+                    },
+                error: function (data) {
+                    $('#Erro').modal('show');
+                    $('#titulo').html("Ops... Ocorreu um erro!");
+                    $('#corpo').html("Tente novamente.");
+                    $("#carregando").html('');
+                    $('#botao').html('<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">Cancelar</button>');
+                }
+            });
+        }
+        function Gravar() {
+             $("#carregando").html('<i class="fas fa-spinner fa-spin">');
+            var data = {
+                DataInicio: $("#data-inicio").val(),
+                DataFim: $("#data-fim").val(),
+                PessoaId: $("#idbusca").val(),
+            }
+            if (data.DataInicio == "" || data.DataInicio == null) {
+                return;
+            }
+
+             $.ajax({
+                type: 'POST',
+                url: '/Usuario/GravarSociedadeTempo',
+                data: data,
+                success: function (data) {
+                        $('#Erro').modal('show');
+                        $('#titulo').html("Mensagem do Sistema");
+                        $('#corpo').html(data);
+                        $('#botao').html('<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">Cancelar</button>');
+                        $("#carregando").html('');
+                    inicio();
+
+                        $("#carregando").html('');
+                    },
+                error: function (data) {
+                    $('#Erro').modal('show');
+                    $('#titulo').html("Ops... Ocorreu um erro!");
+                    $('#corpo').html("Tente novamente.");
+                    $('#botao').html('<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">Cancelar</button>');
+                    $("#carregando").html('');
+                }
+            });
+        }
+        function confirmaExcluir(id) {
+           
+                var botoes = '<button type="button" class="btn btn-dark txt-branco" data-dismiss="modal">Cancelar</button><button type="button" class="btn btn-light vermelho txt-branco" onclick="javascript: excluir('+id+');" data-dismiss="modal">Excluir</button>';
+                $("#botao").html(botoes);
+                $('#Erro').modal('show');
+        }
+        function excluir(id) {
+            $("#carregando").html('<i class="fas fa-spinner fa-spin">');
+            $.ajax({
+                type: 'POST',
+                url: '/Usuario/ExcluirSociedadeTempo',
+                data: { id },
+                success: function (data) {
+                        inicio();
+                        $("#carregando").html('');
+                        $('#Erro').modal('show');
+                        $('#titulo').html("Mensagem do sistema!");
+                        $('#corpo').html(data);
+                        var botoes = '<button type="button" class="btn btn-dark txt-branco" data-dismiss="modal">Cancelar</button>';
+                        $("#botao").html(botoes);
+                        $("#carregando").html('');
+                },
+                error: function (data) {
+                    $('#Erro').modal('show');
+                    $('#titulo').html("Ops... Ocorreu um erro!");
+                    $('#corpo').html("Tente novamente mais tarde.");
+                    var botoes = '<button type="button" class="btn btn-dark txt-branco" data-dismiss="modal">Cancelar</button>';
+                    $("#botao").html(botoes);
+                    $("#carregando").html('');
+                }
+            });
+        }
+
+    </script>
+}
+<div class="container my-5 ">
+    <div class="row ">
+        <div class="col-12 mx-auto" align="center">
+            <span> <img src="~/images/icones-sistema/socio.png"                                                                                                             0 class="logo" alt="Imagem de 1 maquina de cortar grama" /></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12  text-center ">
+            <h2> Tempo Socio </h2><span id="carregando"></span>
+        </div>
+    </div>
+
+</div>
+
+<input type="hidden" id="idbusca" nome="idbusca" value="@ViewData["Id"]"/>
+
+<div class="container">
+    <div class="row ">
+        <div class="col-12 align-self-center float-none">
+            <h2>@ViewData["Nome"]</h2>
+        </div>
+    </div>
+    <hr class="shadow-sm my-3" />
+    <div class="row">
+        <div class="input-group mt-3  col-12 col-lg-4">
+            <label for="data-inicio" class="col-12 col-form-label">Data de início:</label>
+            <input type="date" class="form-control col-12" id="data-inicio" />
+        </div>
+        <div class="input-group mt-3  col-12 col-lg-4">
+            <label for="data-fim " class="col-12 col-form-label">Data de Término:</label>
+            <input type="date" class="form-control col-12" id="data-fim" />
+        </div>
+        <div class="col-4 mt-5">
+            <button type="button" class="btn btn-dark col-12" onclick="Gravar()">Gravar</button>
+        </div>
+    </div>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Data Inicio</th>
+                <th scope="col">Data Fim</th>
+                <th scope="col">Excluir</th>
+                <th scope="col">Encerrar</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+</div>
+<div class="modal" id="Erro" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titulo">Deseja excluir este usuário?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="corpo">
+                Este usuário será excluido permanentemente!
+            </div>
+            <div class="modal-footer" id="botao">
+
+            </div>
+        </div>
+    </div>
+</div>

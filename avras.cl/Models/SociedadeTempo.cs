@@ -5,11 +5,11 @@ namespace avras.cl.Models
 {
     internal partial class SociedadeTempo
     {
-        public int Id { get; set; }
-        public DateTime DataInicio { get; set; }
-        public DateTime? DataFim { get; set; }
-        public int PessoaId { get; set; }
+        internal int Id { get; set; }
+        internal DateTime DataInicio { get; set; }
+        internal DateTime? DataFim { get; set; }
+        internal int PessoaId { get; set; }
 
-        public virtual Pessoa Pessoa { get; set; }
+        internal virtual Pessoa Pessoa { get; set; }
     }
 }

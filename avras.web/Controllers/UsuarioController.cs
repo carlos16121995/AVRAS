@@ -10,9 +10,10 @@ using System.Text;
 using System.Net.Mail;
 using System.Net;
 using cl = avras.cl.Controllers;
-using avras.web.Filters;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using avras.cl.DAL;
 
 namespace avras.web.Controllers
 {
@@ -50,9 +51,117 @@ namespace avras.web.Controllers
         {
             return View();
         }
+        public JsonResult AlterarSenha(IFormCollection form)
+        {
+            string email = form["email"];
+            string senha = form["senha"];
+            string novaSenha = form["novaSenha"];
+            string result = "";
+            cl.Controllers.PessoaController pessoa = new cl.Controllers.PessoaController();
+            var u = pessoa.Autenticar(email, CalculateMD5Hash(senha));
+            if (u != null)
+            {
+                if(novaSenha.Length > 8)
+                {
+                    return Json("Sua Senha é grande ou curta demais. A senha deve ter entre 4 e 8 caracteres.");
+                }
+                else
+                {
+                    List<string> emails = new List<string>();
+                    emails.Add(email);
+                    result = CalculateMD5Hash(novaSenha);
+                    string assunto = "Sua nova senha para acesso ao sistema da A.V.R.A.S";
+                    string texto = " Agora você pode acessar o sistema da A.V.R.A.S de qualquer lugar. Verifique suas mensalidades, compras no bar e fique por sabendo dos aniversariantes do mês para não se esquecer de dar o parabéns. Sua senha para acesso é: " + result;
+                    EnviarEmail(u.Nome, emails, assunto, texto);
+
+                    Response.Cookies.Delete("email");
+                    Response.Cookies.Delete("nome");
+                    Response.Cookies.Delete("senha");
+                    Response.Cookies.Delete("id");
+
+
+                    return Json(new PessoaDAO().TrocarSenha(email, CalculateMD5Hash(senha), result));
+                }
+            }
+            else return Json("Usuario ou senha incorretos");
+
+
+        }
         public IActionResult Usuario()
         {
             return View("Usuario");
+        }
+        [Route("Usuario/GerenciarTempoSocio/{id}")]
+        public IActionResult GerenciarTempoSocio(int id)
+        {
+
+            PessoaViewModel pes = new cl.Controllers.PessoaController().BuscarPessoaPorId(id, false);
+            ViewBag.Id = id;
+            if (pes != null)
+            {
+                ViewBag.Nome = pes.Nome;
+            }
+            
+            return View();
+        }
+        public JsonResult BuscarSociedadeTempo(int id)
+        {
+            List<SociedadeTempoViewModel> ret = new cl.Controllers.PessoaController().BuscarSociedadeTempo(id);
+            return Json (ret);
+        }
+        
+        public JsonResult GravarSociedadeTempo(IFormCollection form)
+        {
+            DateTime dataInicio = DateTime.Now;
+            DateTime? dataFim = null;
+            int id, ret, pessoaId = 0;
+            dataInicio = Convert.ToDateTime(form["DataInicio"]);
+            if(form["DataFim"] != "")
+            {
+                dataFim = Convert.ToDateTime(form["DataFim"]);
+
+            }
+            id = Convert.ToInt32(form["Id"]);
+            pessoaId = Convert.ToInt32(form["PessoaId"]);
+            ret = 0;
+            if (dataInicio != null && dataInicio < DateTime.Now){
+                SociedadeTempoViewModel ST = new SociedadeTempoViewModel()
+                {
+
+                    DataInicio = dataInicio,
+                    DataFim = null,
+                    PessoaId = pessoaId,
+                };
+                if(dataFim != null)
+                {
+                    ST.DataFim = dataFim;
+                    if(dataFim < dataInicio)
+                    {
+                        return Json("A data de inicio não deve ser maior que a data de encerramento");
+                    }
+                }
+                ret = new cl.Controllers.PessoaController().Gravar(ST);
+                if (ret == -1)
+                {
+                    return Json("Ouve um Problema com a conexão com o servidor!");
+                }
+                if (ret == -99)
+                {
+                    return Json("Ouve um problema! Verifique se existe um periodo aberto antes de adicionar um novo");
+                }
+                else return Json("Gravado com sucesso");
+            } 
+            
+            return Json("Data de início não pode ser vazia ou maior que a data atual");
+        }
+        public JsonResult AlterarSociedadeTempo(int id)
+        {
+            return Json(new cl.Controllers.PessoaController().Alterar(id));
+        }
+        public JsonResult ExcluirSociedadeTempo(int id)
+        {
+            int ret = new cl.Controllers.PessoaController().ExcluirSociedadeTempo(id);
+            return Json(ret == 0 ? "Não é possível excluir um período em aberto. Feche o Periodo adicionando uma data de fim e depois o exclua." : "Excluido com sucesso!");
         }
         public IActionResult Index()
         {
@@ -69,7 +178,7 @@ namespace avras.web.Controllers
         }
         public IActionResult Autenticar(IFormCollection form)
         {
-            
+
             cl.Controllers.PessoaController pessoa = new cl.Controllers.PessoaController();
             var u = pessoa.Autenticar(form["Email"], CalculateMD5Hash(form["Senha"]));
 
@@ -80,6 +189,7 @@ namespace avras.web.Controllers
                 Response.Cookies.Append("id", u.Id.ToString(), ckOptions);
                 Response.Cookies.Append("email", form["Email"], ckOptions);
                 Response.Cookies.Append("senha", form["Senha"], ckOptions);
+                Response.Cookies.Append("nome", u.Nome, ckOptions);
 
                 return Json(u);
             }
@@ -101,23 +211,23 @@ namespace avras.web.Controllers
             ViewBag.Cpf = cpf;
             return View();
         }
-        [ValidarAcesso(Order = 1)]
+
         public IActionResult Cadastro()
         {
             ViewBag.Cpf = "";
             return View();
         }
-        
+
         public IActionResult Lista()
         {
             return View();
         }
-       
+
         public JsonResult Excluir(int id)
         {
             return Json(id > 0 ? new cl.Controllers.PessoaController().Excluir(id) : -10);
         }
-        
+
         public JsonResult Gravar(IFormCollection form)
         {
             string Cpf, Nome, Telefone, Email, Senha, Observacoes, Cep, Cidade, Rua, Bairro, Complemento;
@@ -234,7 +344,7 @@ namespace avras.web.Controllers
             return Json(retorno);
 
         }
-        
+
         public JsonResult BuscarPorCpf(string str)
         {
             if (ValidaCpf(str, out string cpf))
@@ -248,14 +358,14 @@ namespace avras.web.Controllers
             }
             return Json(null);
         }
-        
-        public JsonResult BuscarUsuarios()
+
+        public JsonResult BuscarUsuarios(int tipo)
         {
-            List<PessoaViewModel> pessoa = new cl.Controllers.PessoaController().BuscarUsuarios(true); /*váriavel boolean traz ou não o endereço*/
+            List<PessoaViewModel> pessoa = new cl.Controllers.PessoaController().BuscarUsuarios(tipo, true); /*váriavel boolean traz ou não o endereço*/
 
             return Json(pessoa);
         }
-        
+
         public JsonResult BuscarPorNome(string nome)
         {
             int erros = 0;
@@ -269,7 +379,7 @@ namespace avras.web.Controllers
             }
             return Json(erros);
         }
-        
+
         private string EnviarEmail(string nomeFrom, List<string> emailPara, string assunto, string texto)
         {
             string emailFrom = "avrasteste@gmail.com";
@@ -308,7 +418,7 @@ namespace avras.web.Controllers
                 msg.Dispose();
             }
         }
-        
+
         /*   Validações de campos de formulário
          * 
          * 
@@ -333,7 +443,7 @@ namespace avras.web.Controllers
             }
             return resultado;
         }
-        
+
         private bool ValidaCpf(string cpf, out string str)
         {
             str = cpf;
@@ -382,6 +492,7 @@ namespace avras.web.Controllers
             }
             return false;
         }
+        
         private bool ValidaDataNascimento(string str, out DateTime dataNascimento)
         {
             if (DateTime.TryParse(str, out dataNascimento))

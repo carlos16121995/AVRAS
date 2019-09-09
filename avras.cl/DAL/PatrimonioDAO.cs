@@ -13,7 +13,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     if (patrimonio.Id == 0)
                     {
@@ -36,11 +36,11 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var pAtual = contexto.Patrimonio.Where(p => p.Id == pAlterado.Id).Include("TipoPatrimonio").FirstOrDefault();
                     pAtual.Nome = pAlterado.Nome;
-                    pAtual.Descicao = pAlterado.Descicao;
+                    pAtual.Descricao = pAlterado.Descricao;
                     pAtual.Quantidade = pAlterado.Quantidade;
                     pAtual.ValorCompra = pAlterado.ValorCompra;
                     pAtual.ValorPerda = pAlterado.ValorPerda;
@@ -63,7 +63,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.Patrimonio.Find(id);
                 }
@@ -73,11 +73,11 @@ namespace avras.cl.DAL
                 return null;
             }
         }
-        internal List<Patrimonio> BuscarPatrimoniosPorNome(string nome) 
+        internal List<Patrimonio> BuscarPatrimoniosPorNome(string nome)
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     nome = "%" + nome + "%";
                     return (from p in contexto.Patrimonio
@@ -94,7 +94,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.Patrimonio.OrderBy(p => p.Nome).ToList();
                 }
@@ -108,7 +108,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var patrimonio = contexto.Patrimonio.Where(p => p.Id == id).FirstOrDefault();
                     if (patrimonio != null)

@@ -12,7 +12,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     if (patrocinadores.Id == 0)
                     {
@@ -35,13 +35,12 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var pAtual = contexto.Patrocinadores.Where(p => p.Id == pAlterado.Id).FirstOrDefault();
                     pAtual.Nome = pAlterado.Nome;
                     pAtual.DataCadastro = pAlterado.DataCadastro;
                     pAtual.Valor = pAlterado.Valor;
-                    pAtual.DataVencimento = pAlterado.DataVencimento;
                     pAtual.Parcelas = pAlterado.Parcelas;
                     return contexto.SaveChanges();
                 }
@@ -56,7 +55,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.Patrocinadores.Find(id);
                 }
@@ -70,7 +69,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     nome = "%" + nome + "%";
                     return (from p in contexto.Patrocinadores
@@ -87,7 +86,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.Patrocinadores.OrderBy(p => p.Nome).ToList();
                 }
@@ -101,7 +100,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var patrocinadores = contexto.Patrocinadores.Where(p => p.Id == id).FirstOrDefault();
                     if (patrocinadores != null)

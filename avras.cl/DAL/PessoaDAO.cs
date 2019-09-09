@@ -7,16 +7,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace avras.cl.DAL
 {
-    internal class PessoaDAO
+    public class PessoaDAO
     {
         internal int Gravar(Pessoa pessoa)
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     if (pessoa.Id == 0)
                     {
+                        
                         contexto.Pessoa.Add(pessoa);
                     }
                     else
@@ -36,7 +37,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var pAtual = contexto.Pessoa.Where(p => p.Id == pAlterado.Id).Include("Endereco").FirstOrDefault();
                     pAtual.Nome = pAlterado.Nome;
@@ -72,7 +73,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return (from p in contexto.Pessoa
                             where p.Cpf == cpf
@@ -88,7 +89,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     nome = "%" + nome + "%";
                     return (from p in contexto.Pessoa
@@ -101,13 +102,28 @@ namespace avras.cl.DAL
                 return null;
             }
         }
-        internal List<Pessoa> BuscarPessoa()
+        
+        internal List<Pessoa> BuscarPessoa(int tipo)
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
-                    return contexto.Pessoa.OrderBy(p => p.Nome).ToList();
+                    if (tipo == 1)
+                    {
+                        return contexto.Pessoa.OrderBy(p => p.Nome).ToList();
+                    }
+                    if (tipo == 2)
+                    {
+                        byte t = 1;
+                        return contexto.Pessoa.Include("Endereco").Where(p => p.Socio == t).ToList();
+                    }
+                    else
+                    {
+                        byte t = 1;
+                        return contexto.Pessoa.Include("Endereco").Where(p => p.Jogador == t).ToList();
+                    }
+                   
                 }
             }
             catch (Exception ex)
@@ -115,11 +131,12 @@ namespace avras.cl.DAL
                 return null;
             }
         }
+        
         internal int Excluir(int id)
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var pessoa = contexto.Pessoa.Include("Endereco").Where(p => p.Id == id).FirstOrDefault();
                     if (pessoa != null)
@@ -138,15 +155,51 @@ namespace avras.cl.DAL
                 return -1;
             }
         }
+        public int TrocarSenha(string email, string senha, string senhaNova)
+        {
+            try
+            {
+                using (avrasContext contexto = new avrasContext())
+                {
+                    Pessoa pes = (from p in contexto.Pessoa
+                            where p.Email == email && p.Senha == senha
+                            select p).FirstOrDefault();
+                    pes.Senha = senhaNova;
+                    contexto.Attach(pes);
+                    return contexto.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+
+            
+
+        }
         internal Pessoa Autenticar(string email, string senha)
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return (from p in contexto.Pessoa
                             where p.Email == email && p.Senha == senha
                             select p).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        internal Pessoa BuscarPessoaPorId(int id)
+        {
+            try
+            {
+                using (avrasContext contexto = new avrasContext())
+                {
+                    return contexto.Pessoa.Find(id);
                 }
             }
             catch (Exception ex)

@@ -5,14 +5,16 @@ namespace avras.cl.Models
 {
     internal partial class ContaCorrente
     {
-        public ContaCorrente()
+        internal ContaCorrente()
         {
             Conta = new HashSet<Conta>();
+            MovimentacaoConta = new HashSet<MovimentacaoConta>();
         }
 
-        public int Id { get; set; }
-        public decimal Valor { get; set; }
+        internal int Id { get; set; }
+        internal decimal Valor { get; set; }
 
-        public virtual ICollection<Conta> Conta { get; set; }
+        internal virtual ICollection<Conta> Conta { get; set; }
+        internal virtual ICollection<MovimentacaoConta> MovimentacaoConta { get; set; }
     }
 }

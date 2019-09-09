@@ -19,9 +19,9 @@ namespace avras.cl.Models
         {
             return new PessoaDAO().BuscarPorCpf(cpf);
         }
-        public List<Pessoa> BuscarPessoa()
+        public List<Pessoa> BuscarPessoa(int tipo)
         {
-            return new PessoaDAO().BuscarPessoa();
+            return new PessoaDAO().BuscarPessoa(tipo);
         }
         public List<Pessoa> BuscarUsuarioPorNome(string nome)
         {
@@ -30,6 +30,10 @@ namespace avras.cl.Models
         public int Excluir(int id)
         {
             return new PessoaDAO().Excluir(id);
+        }
+        public Pessoa BuscarPessoaPorId(int id)
+        {
+            return new PessoaDAO().BuscarPessoaPorId(id);
         }
         public Pessoa Autenticar(string email, string senha)
         {

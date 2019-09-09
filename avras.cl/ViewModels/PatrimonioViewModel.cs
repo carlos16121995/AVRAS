@@ -5,11 +5,11 @@ using avras.cl.ViewModels;
 
 namespace avras.cl.ViewModels
 {
-     public class PatrimonioViewModel
+    public class PatrimonioViewModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public string Descicao { get; set; }
+        public string Descricao { get; set; }
         public int Quantidade { get; set; }
         public decimal? ValorCompra { get; set; }
         public decimal? ValorPerda { get; set; }

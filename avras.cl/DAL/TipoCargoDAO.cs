@@ -12,7 +12,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     if (tipoCargo.Id == 0)
                     {
@@ -35,7 +35,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.TipoCargo.Find(id);
                 }
@@ -49,7 +49,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.TipoCargo.OrderBy(p => p.Nome).ToList();
                 }
@@ -63,7 +63,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var tcAtual = contexto.TipoCargo.Where(p => p.Id == tcAlterado.Id).FirstOrDefault();
                     tcAtual.Nome = tcAlterado.Nome;
@@ -81,7 +81,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var tipoCargo = contexto.TipoCargo.Where(p => p.Id == id).FirstOrDefault();
                     if (tipoCargo != null)

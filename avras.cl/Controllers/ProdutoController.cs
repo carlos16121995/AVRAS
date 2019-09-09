@@ -16,10 +16,9 @@ namespace avras.cl.Controllers
             {
                 Id = produto.Id,
                 Nome = produto.Nome,
-                ValorCompra = produto.ValorCompra,
                 ValorVenda = produto.ValorVenda,
-                Quantidade = produto.Quantidade,
-                QuantidadeMinima = produto.QuantidadeMinima,
+                Estoque = produto.Estoque,
+                EstoqueMinimo = produto.EstoqueMinimo,
                 CategoriaId = produto.CategoriaId,
                 Categoria = (includeCategoria == true ? BuscarCategoriaPorId(produto.CategoriaId) : null),
                 Disponível = produto.Disponível,
@@ -35,10 +34,10 @@ namespace avras.cl.Controllers
                         {
                             Id = p.Id,
                             Nome = p.Nome,
-                            ValorCompra = p.ValorCompra,
                             ValorVenda = p.ValorVenda,
-                            Quantidade = p.Quantidade,
-                            QuantidadeMinima = p.QuantidadeMinima,
+                            Estoque = p.Estoque,
+                            EstoqueMinimo = p.EstoqueMinimo,
+                            CategoriaId = p.CategoriaId,
                             Categoria = (includeCategoria == true ? BuscarCategoriaPorId(p.CategoriaId) : null),
                             Disponível = p.Disponível,
                         }).ToList();
@@ -50,17 +49,17 @@ namespace avras.cl.Controllers
             var produtos = new Produto().BuscarProdutos();
             if (produtos != null && produtos.Count > 0)
 
-                return (from p in produtos
+                return (from produto in produtos
                         select new ProdutoViewModel()
                         {
-                            Id = p.Id,
-                            Nome = p.Nome,
-                            ValorCompra = p.ValorCompra,
-                            ValorVenda = p.ValorVenda,
-                            Quantidade = p.Quantidade,
-                            QuantidadeMinima = p.QuantidadeMinima,
-                            Categoria = (includeCategoria == true ? BuscarCategoriaPorId(p.CategoriaId) : null),
-                            Disponível = p.Disponível,
+                            Id = produto.Id,
+                            Nome = produto.Nome,
+                            ValorVenda = produto.ValorVenda,
+                            Estoque = produto.Estoque,
+                            EstoqueMinimo = produto.EstoqueMinimo,
+                            CategoriaId = produto.CategoriaId,
+                            Categoria = (includeCategoria == true ? BuscarCategoriaPorId(produto.CategoriaId) : null),
+                            Disponível = produto.Disponível,
                         }).ToList();
             else
                 return null;
@@ -71,11 +70,11 @@ namespace avras.cl.Controllers
 
             Produto produto = new Produto()
             {
+                Id = p.Id,
                 Nome = p.Nome,
-                ValorCompra = p.ValorCompra,
                 ValorVenda = p.ValorVenda,
-                Quantidade = p.Quantidade,
-                QuantidadeMinima = p.QuantidadeMinima,
+                Estoque = p.Estoque,
+                EstoqueMinimo = p.EstoqueMinimo,
                 CategoriaId = p.CategoriaId,
                 Disponível = p.Disponível,
             };
@@ -98,10 +97,9 @@ namespace avras.cl.Controllers
             {
                 Id = p.Id,
                 Nome = p.Nome,
-                ValorCompra = p.ValorCompra,
                 ValorVenda = p.ValorVenda,
-                Quantidade = p.Quantidade,
-                QuantidadeMinima = p.QuantidadeMinima,
+                Estoque = p.Estoque,
+                EstoqueMinimo = p.EstoqueMinimo,
                 CategoriaId = p.CategoriaId,
                 Disponível = p.Disponível,
             };
@@ -113,68 +111,68 @@ namespace avras.cl.Controllers
         }
 
         // Tipos e Categorias
-        public List<ViewModels.ProdutoCategoria> Listar()
+        public List<TipoProdutoViewModel> Listar()
         {
-            var categorias = new Models.ProdutoCategoria().BuscarProdutoCategoria();
+            var categorias = new Models.TipoProduto().BuscarTipoProduto();
             if (categorias != null && categorias.Count > 0)
 
                 return (from categoria in categorias
-                        select new ViewModels.ProdutoCategoria()
+                        select new TipoProdutoViewModel()
                         {
                             Id = categoria.Id,
                             Nome = categoria.Nome,
-                            Descricao = categoria.Descricao,
+                            SrcImagem = categoria.SrcImagem,
                         }).ToList();
             else
                 return null;
         }
-        
-        
-        public ViewModels.ProdutoCategoria BuscarCategoriaPorId(int id)
+
+
+        public TipoProdutoViewModel BuscarCategoriaPorId(int id)
         {
-            var categoria = new Models.ProdutoCategoria().BuscarProdutoCategoriaPorId(id);
-            return new ViewModels.ProdutoCategoria()
+            var categoria = new Models.TipoProduto().BuscarTipoProdutoPorId(id);
+            return new TipoProdutoViewModel()
             {
                 Id = categoria.Id,
                 Nome = categoria.Nome,
-                Descricao = categoria.Descricao,
+                SrcImagem = categoria.SrcImagem,
             };
         }
-        public int Gravar(ViewModels.ProdutoCategoria p)
+        public int Gravar(TipoProdutoViewModel p)
         {
             int result;
 
-            Models.ProdutoCategoria produtoCategoria = new Models.ProdutoCategoria()
+            Models.TipoProduto TipoProduto = new Models.TipoProduto()
             {
                 Nome = p.Nome,
-                Descricao = p.Descricao,
+                SrcImagem = p.SrcImagem,
             };
 
             if (p.Id != 0)
             {
-                produtoCategoria.Id = p.Id;
-                result = produtoCategoria.Alterar();
+                TipoProduto.Id = p.Id;
+                result = TipoProduto.Alterar();
             }
             else
             {
-                result = produtoCategoria.Gravar();
+                result = TipoProduto.Gravar();
             }
 
             return result;
         }
-        public int Alterar(ViewModels.ProdutoCategoria p)
+        public int Alterar(TipoProdutoViewModel p)
         {
-            Models.ProdutoCategoria produtoCategoria = new Models.ProdutoCategoria()
+            Models.TipoProduto TipoProduto = new Models.TipoProduto()
             {
                 Id = p.Id,
                 Nome = p.Nome,
-                Descricao = p.Descricao,
+                SrcImagem = p.SrcImagem,
             };
-            return produtoCategoria.Alterar();
+            return TipoProduto.Alterar();
         }
-        public int ExcluirProdutoCategoria(int id)
+        public int ExcluirTipoProduto(int id)
         {
-            return new Models.ProdutoCategoria().Excluir(id);
+            return new Models.TipoProduto().Excluir(id);
         }
 
 

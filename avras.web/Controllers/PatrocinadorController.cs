@@ -9,11 +9,11 @@ using System.Drawing;
 using static System.Net.Mime.MediaTypeNames;
 using cl = avras.cl.Controllers;
 using avras.cl.ViewModels;
-using avras.web.Filters;
+
 
 namespace avras.web.Controllers
 {
-    [ValidarAcesso(Order = 1)]
+
     public class PatrocinadorController : Controller
     {
         public IActionResult Patrocinador()
@@ -74,17 +74,17 @@ namespace avras.web.Controllers
             {
                 return false;
             }
-          
+
             if (form["Nome"] == "")
             {
                 return false;
             }
-            if(!decimal.TryParse(form["Valor"],out valor))
+            if (!decimal.TryParse(form["Valor"], out valor))
             {
                 return false;
             }
-            
-            if(!int.TryParse(form["Parcelas"], out parcelas))
+
+            if (!int.TryParse(form["Parcelas"], out parcelas))
             {
                 return false;
             }
@@ -125,7 +125,7 @@ namespace avras.web.Controllers
                 };
                 return Json(retorno);
             }
-            if(data_vencimento.Month < DateTime.Now.Month || data_vencimento.Day <= DateTime.Now.Day)
+            if (data_vencimento.Month < DateTime.Now.Month || data_vencimento.Day <= DateTime.Now.Day)
             {
                 return Json("99");
             }
@@ -143,8 +143,8 @@ namespace avras.web.Controllers
         }
         public JsonResult BuscarPorNome(string nome)
         {
-           return Json(new cl.Controllers.PatrocinadoresContoller().BuscarPatrocinadoresPorNome(nome));
-                  
+            return Json(new cl.Controllers.PatrocinadoresContoller().BuscarPatrocinadoresPorNome(nome));
+
         }
     }
 }

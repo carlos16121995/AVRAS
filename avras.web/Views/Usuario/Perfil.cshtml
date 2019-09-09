@@ -4,5 +4,51 @@
     Layout = "~/Views/Shared/_Layout_Painel.cshtml";
 }
 
-<h2>Perfil</h2>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12" align="center">
+            <span> <img src="~/images/icones-sistema/jogadores.png" class="logo" alt="Imagem de 1 pessoas com camisa de futebol com o numero 10" /></span>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-12 align-self-center float-none">
+            <h2 class="text-center"> Perfil </h2><span id="carregando"></span>
+        </div>
+    </div>
+</div>
+<div class="card-deck center-block container mx-auto">
+    <div class="row col-12">
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Usuario/Alterar_Senha';">
+            <img src="~/images/icones-sistema/login.png" class="mt-4 logo mx-auto " alt="Imagem de uma chave" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Usuario/Alterar_Senha" class="text-dark"> Alterar Senha </a></p>
+            </div>
+        </div>
+
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Usuario/Lista';">
+            <img src="~/images/icones-sistema/Listar.png" class=" mt-4 logo mx-auto" alt="Imagem de uma prancheta para Anotações" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Usuario/Lista" class="text-dark"> Usuários Cadastrados </a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row col-12">
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Usuario/Pendencia';">
+            <img src="~/images/icones-sistema/pendencia.png" class=" mt-4 logo mx-auto" alt="Imagem de balões de notificações" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Usuario/Pendencia" class="text-dark"> Pendências </a></p>
+            </div>
+        </div>
+
+        <div class="card col-12 col-lg-6 border-light mx-auto" onclick="window.location.href='/Usuario/Relatorio';">
+            <img src="~/images/icones-sistema/relatorio.png" class=" mt-4 logo mx-auto" alt="Imagem de um gráfico de linhas" />
+            <div class="card-body">
+                <p class="text-center"> <a href="/Usuario/Relatorio" class="text-dark"> Relatórios </a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 

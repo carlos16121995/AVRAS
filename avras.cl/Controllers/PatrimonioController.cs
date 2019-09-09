@@ -16,7 +16,7 @@ namespace avras.cl.Controllers
             {
                 Id = p.Id,
                 Nome = p.Nome,
-                Descicao = p.Descicao,
+                Descricao = p.Descricao,
                 Quantidade = p.Quantidade,
                 ValorCompra = p.ValorCompra,
                 ValorPerda = p.ValorPerda,
@@ -38,7 +38,7 @@ namespace avras.cl.Controllers
                         {
                             Id = p.Id,
                             Nome = p.Nome,
-                            Descicao = p.Descicao,
+                            Descricao = p.Descricao,
                             Quantidade = p.Quantidade,
                             ValorCompra = p.ValorCompra,
                             ValorPerda = p.ValorPerda,
@@ -62,7 +62,7 @@ namespace avras.cl.Controllers
                         {
                             Id = p.Id,
                             Nome = p.Nome,
-                            Descicao = p.Descicao,
+                            Descricao = p.Descricao,
                             Quantidade = p.Quantidade,
                             ValorCompra = p.ValorCompra,
                             ValorPerda = p.ValorPerda,
@@ -83,7 +83,7 @@ namespace avras.cl.Controllers
             Patrimonio patrimonio = new Patrimonio()
             {
                 Nome = p.Nome,
-                Descicao = p.Descicao,
+                Descricao = p.Descricao,
                 Quantidade = p.Quantidade,
                 ValorCompra = p.ValorCompra,
                 ValorPerda = p.ValorPerda,
@@ -112,7 +112,7 @@ namespace avras.cl.Controllers
             {
                 Id = p.Id,
                 Nome = p.Nome,
-                Descicao = p.Descicao,
+                Descricao = p.Descricao,
                 Quantidade = p.Quantidade,
                 ValorCompra = p.ValorCompra,
                 ValorPerda = p.ValorPerda,
@@ -184,7 +184,7 @@ namespace avras.cl.Controllers
                 Id = p.Id,
                 Nome = p.Nome,
                 Descricao = p.Descricao,
-                
+
             };
             return tipoPatrimonio.Alterar();
         }

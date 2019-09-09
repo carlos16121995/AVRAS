@@ -5,11 +5,11 @@ namespace avras.cl.Models
 {
     internal partial class Pagar
     {
-        public int ContaId { get; set; }
-        public decimal ValorPago { get; set; }
-        public DateTime DataPagamento { get; set; }
-        public int Parcelas { get; set; }
+        internal int ContaId { get; set; }
+        internal decimal? ValorPago { get; set; }
+        internal DateTime? DataPagamento { get; set; }
+        internal int Parcelas { get; set; }
 
-        public virtual Conta Conta { get; set; }
+        internal virtual Conta Conta { get; set; }
     }
 }

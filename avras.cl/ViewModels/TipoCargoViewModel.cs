@@ -10,7 +10,7 @@ namespace avras.cl.ViewModels
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public int Permissao { get; set; }
-        
+
 
         public virtual ICollection<CargoViewModel> Cargo { get; set; }
     }

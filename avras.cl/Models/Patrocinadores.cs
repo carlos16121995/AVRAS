@@ -5,21 +5,19 @@ namespace avras.cl.Models
 {
     internal partial class Patrocinadores
     {
-        public Patrocinadores()
+        internal Patrocinadores()
         {
             Receber = new HashSet<Receber>();
         }
 
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public decimal Valor { get; set; }
-        public DateTime DataVencimento { get; set; }
-        public int Parcelas { get; set; }
-        public byte[] Imagem { get; set; }
-        public string Descricao { get; set; }
-        public string Alt { get; set; }
+        internal int Id { get; set; }
+        internal string Nome { get; set; }
+        internal DateTime DataCadastro { get; set; }
+        internal decimal Valor { get; set; }
+        internal int Parcelas { get; set; }
+        internal string SrcImagem { get; set; }
+        internal string Descricao { get; set; }
 
-        public virtual ICollection<Receber> Receber { get; set; }
+        internal virtual ICollection<Receber> Receber { get; set; }
     }
 }

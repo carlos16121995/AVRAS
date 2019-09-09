@@ -140,7 +140,7 @@ namespace avras.web.Controllers
                 {
                     Id = id,
                     Nome = nome,
-                    Descicao = descicao,
+                    Descricao = descicao,
                     Quantidade = quantidade,
                     ValorCompra = valorCompra,
                     ValorPerda = valorPerda,

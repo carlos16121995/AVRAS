@@ -7,7 +7,7 @@ using System.Text;
 
 namespace avras.cl.Controllers
 {
-    class AluguelController
+    public class AluguelController
     {
         public List<TipoAluguelViewModel> Listar()
         {
@@ -15,7 +15,7 @@ namespace avras.cl.Controllers
             if (tipoAlugueis != null && tipoAlugueis.Count > 0)
 
                 return (from tipoAluguel in tipoAlugueis
-                        select new TipoAluguelViewModel()
+                        select new avras.cl.ViewModels.TipoAluguelViewModel()
                         {
                             Id = tipoAluguel.Id,
                             Nome = tipoAluguel.Nome,

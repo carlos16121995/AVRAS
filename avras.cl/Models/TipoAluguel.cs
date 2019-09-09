@@ -5,15 +5,15 @@ namespace avras.cl.Models
 {
     internal partial class TipoAluguel
     {
-        public TipoAluguel()
+        internal TipoAluguel()
         {
             Aluguel = new HashSet<Aluguel>();
         }
 
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public decimal Valor { get; set; }
+        internal int Id { get; set; }
+        internal string Nome { get; set; }
+        internal decimal Valor { get; set; }
 
-        public virtual ICollection<Aluguel> Aluguel { get; set; }
+        internal virtual ICollection<Aluguel> Aluguel { get; set; }
     }
 }

@@ -22,8 +22,26 @@
     }
 </style>
 <script>
+    function validaSenha() {
+    var senha = $("#senha").val();
+    if ((senha == "") || (senha.length < 4) || (senha.length > 8)) {
+        $("#senha").focus();
+        $("#senha").addClass("is-invalid");
+        if ($("#senha").hasClass("is-valid"))
+            $("#senha").removeClass("is-valid");
+        return true;
+    }
+    else {
+        $("#senha").focus();
+        $("#senha").addClass("is-valid");
+        if ($("#senha").hasClass("is-invalid"))
+            $("#senha").removeClass("is-invalid");
+        return false;
+    }
+}
     function Antenticar() {
-        var form = {
+        if (validaSenha) {
+             var form = {
             email: $("#email").val(),
             senha: $("#senha").val(),
         };
@@ -34,7 +52,7 @@
             data: { Email: form.email, Senha: form.senha },
             success: function (result) {
                 if (result != null && result != "") {
-                    window.location.href = "/Usuario/Cadastro";
+                    window.location.href = "/Home/Inicio";
                 }
                 else {
                     $('#Erro').modal('show');
@@ -52,6 +70,8 @@
 
             }
         });
+        }
+       
     }
 </script>
 <div class="container ">
@@ -63,7 +83,7 @@
                         <span id="carregando"></span>
                     </div>
                     <div class="col-lg-12 col-12 justify-content-center" align="center">
-                        <span> <img src="~/images/socio.png" id="img" class="logo" alt="Imagem de 3 pessoas uma ao lado da outra simbolizando uma sociedade" /></span>
+                        <span> <img src="~/images/icones-sistema/login.png" id="img" class="logo" alt="Imagem de 3 pessoas uma ao lado da outra simbolizando uma sociedade" /></span>
                     </div>
 
                 </div>
@@ -85,19 +105,17 @@
 
             <div class="row">
                 <div class="form-group col-12">
-                    <label class="text-black" for="nome">Nome:</label>
+                    <label class="text-black" for="senha">Senha:</label>
                     <input type="text" class="form-control" id="senha" placeholder="Sua senha aqui!" required>
-                    <div class="valid-feedback" id="valida-nome-valid">
+                    <div class="valid-feedback" id="valida-senha-valid">
                     </div>
-                    <div class="invalid-feedback" id="valida-nome">
-                        Informe um nome com no mínimo 4 caracteres!
+                    <div class="invalid-feedback" id="valida-senha">
+                        Informe uma senha com 4 a 8 caracteres!
                     </div>
                 </div>
             </div>
-            <button class="btn btn-danger float-left my-3 col-5" onclick="javascript: Antenticar();" type="button">Button button</button>
-            <button class="btn btn-danger float-left my-3 col-5" onclick="javascript: Antenticar();" type="submit">button submit</button>
-            <input type="button"  class="btn btn-danger float-left my-3 col-5" onclick="javascript: Antenticar();" value="input button"/>
-            <input type="submit" class="btn btn-danger float-left my-3 col-5" onclick="javascript: Antenticar();" value="input submit" />
+            <button class="btn btn-dark float-right my-3 col-5" onclick="javascript: Antenticar();" type="button">Logar-se</button>
+            <button class="btn btn-light float-left my-3 col-5" onclick="window.location.href='/Usuario/Cadastro_Usuario';" type="button">Cadastrar-se</button>
             
         </div>
         

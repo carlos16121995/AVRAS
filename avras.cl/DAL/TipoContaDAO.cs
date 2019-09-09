@@ -12,7 +12,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     if (tipoConta.Id == 0)
                     {
@@ -35,7 +35,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.TipoConta.Find(id);
                 }
@@ -49,7 +49,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     return contexto.TipoConta.OrderBy(p => p.Nome).ToList();
                 }
@@ -63,7 +63,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var tcAtual = contexto.TipoConta.Where(p => p.Id == tcAlterado.Id).FirstOrDefault();
                     tcAtual.Nome = tcAlterado.Nome;
@@ -80,7 +80,7 @@ namespace avras.cl.DAL
         {
             try
             {
-                using (avrastesteContext contexto = new avrastesteContext())
+                using (avrasContext contexto = new avrasContext())
                 {
                     var tipoConta = contexto.TipoConta.Where(p => p.Id == id).FirstOrDefault();
                     if (tipoConta != null)

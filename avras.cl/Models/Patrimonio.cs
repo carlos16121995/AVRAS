@@ -5,18 +5,18 @@ namespace avras.cl.Models
 {
     internal partial class Patrimonio
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Descicao { get; set; }
-        public int Quantidade { get; set; }
-        public decimal? ValorCompra { get; set; }
-        public decimal? ValorPerda { get; set; }
-        public byte Disponibilidade { get; set; }
-        public string Anotacao { get; set; }
-        public DateTime? DataAquisicao { get; set; }
-        public DateTime? DataPerda { get; set; }
-        public int TipoPatrimonioId { get; set; }
+        internal int Id { get; set; }
+        internal string Nome { get; set; }
+        internal string Descricao { get; set; }
+        internal int Quantidade { get; set; }
+        internal decimal? ValorCompra { get; set; }
+        internal decimal? ValorPerda { get; set; }
+        internal byte Disponibilidade { get; set; }
+        internal string Anotacao { get; set; }
+        internal DateTime? DataAquisicao { get; set; }
+        internal DateTime? DataPerda { get; set; }
+        internal int TipoPatrimonioId { get; set; }
 
-        public virtual TipoPatrimonio TipoPatrimonio { get; set; }
+        internal virtual TipoPatrimonio TipoPatrimonio { get; set; }
     }
 }

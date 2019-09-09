@@ -5,12 +5,12 @@ namespace avras.cl.Models
 {
     internal partial class ItensVenda
     {
-        public int ProdutoId { get; set; }
-        public int VendaId { get; set; }
-        public int Quantidade { get; set; }
-        public decimal ProdutoValorUnitario { get; set; }
+        internal int ProdutoId { get; set; }
+        internal int VendaId { get; set; }
+        internal int Quantidade { get; set; }
+        internal decimal ProdutoValorUnitario { get; set; }
 
-        public virtual Produto Produto { get; set; }
-        public virtual Venda Venda { get; set; }
+        internal virtual Produto Produto { get; set; }
+        internal virtual Venda Venda { get; set; }
     }
 }

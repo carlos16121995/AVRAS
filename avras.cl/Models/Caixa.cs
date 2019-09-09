@@ -8,11 +8,13 @@ namespace avras.cl.Models
         public Caixa()
         {
             ControleCaixa = new HashSet<ControleCaixa>();
+            MovimentacaoCaixa = new HashSet<MovimentacaoCaixa>();
         }
 
         public int Id { get; set; }
         public decimal Valor { get; set; }
 
         public virtual ICollection<ControleCaixa> ControleCaixa { get; set; }
+        public virtual ICollection<MovimentacaoCaixa> MovimentacaoCaixa { get; set; }
     }
 }

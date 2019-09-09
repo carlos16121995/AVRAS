@@ -29,7 +29,7 @@ namespace avras.cl.Controllers
 
         public TipoCargoViewModel BuscarTipoCargoPorId(int id)
         {
-            
+
             var tipoCargo = new TipoCargo().BuscarTipoCargoPorId(id);
             return new TipoCargoViewModel()
             {

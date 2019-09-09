@@ -1,8 +1,5 @@
-﻿
-using System;
+﻿using avras.cl.ViewModels;
 using System.Collections.Generic;
-using System.Text;
-
 namespace avras.cl.ViewModels
 {
     public class TipoAluguelViewModel

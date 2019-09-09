@@ -5,23 +5,17 @@ namespace avras.cl.Models
 {
     internal partial class Conta
     {
-        public Conta()
-        {
-            ControleCaixa = new HashSet<ControleCaixa>();
-        }
+        internal int Id { get; set; }
+        internal string Nome { get; set; }
+        internal string Descricao { get; set; }
+        internal decimal Valor { get; set; }
+        internal DateTime Data { get; set; }
+        internal int TipoId { get; set; }
+        internal int? ContaCorrenteId { get; set; }
 
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
-        public decimal Valor { get; set; }
-        public DateTime Data { get; set; }
-        public int TipoId { get; set; }
-        public int? ContaCorrenteId { get; set; }
-
-        public virtual ContaCorrente ContaCorrente { get; set; }
-        public virtual TipoConta Tipo { get; set; }
-        public virtual Pagar Pagar { get; set; }
-        public virtual Receber Receber { get; set; }
-        public virtual ICollection<ControleCaixa> ControleCaixa { get; set; }
+        internal virtual ContaCorrente ContaCorrente { get; set; }
+        internal virtual TipoConta Tipo { get; set; }
+        internal virtual Pagar Pagar { get; set; }
+        internal virtual Receber Receber { get; set; }
     }
 }
