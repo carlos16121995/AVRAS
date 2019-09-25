@@ -14,8 +14,7 @@ namespace avras.web.Models
 
         public Script()
         {
-            string strcon = "Server=mysql.avras.kinghost.net;User ID=avras;Password=avras2019;Database=avras;Persist Security Info=True";
-
+            
             _conexao = new MySqlConnection(strcon);
         }
 
